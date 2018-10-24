@@ -1,0 +1,438 @@
+
+ <!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  
+    <title>Java特殊对象 | 勤奋的猪</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="勤奋的猪">
+    
+
+    
+    <meta name="description" content="概述java为了节省内存,会缓存部分常用数据来避免频繁创造对象. String缓存静态创建和new创建String是java.lang包下的字符串类,底层实现使用享元模式,共享对象.123456789101112@Testpublic void test1()&amp;#123;    String s1 = &quot;aaa&quot;;    String s2 = &quot;aaa&quot;;    String s3 = new">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java特殊对象">
+<meta property="og:url" content="http://yoursite.com/2018/08/17/Java特殊对象/index.html">
+<meta property="og:site_name" content="勤奋的猪">
+<meta property="og:description" content="概述java为了节省内存,会缓存部分常用数据来避免频繁创造对象. String缓存静态创建和new创建String是java.lang包下的字符串类,底层实现使用享元模式,共享对象.123456789101112@Testpublic void test1()&amp;#123;    String s1 = &quot;aaa&quot;;    String s2 = &quot;aaa&quot;;    String s3 = new">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-17T15:59:05.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java特殊对象">
+<meta name="twitter:description" content="概述java为了节省内存,会缓存部分常用数据来避免频繁创造对象. String缓存静态创建和new创建String是java.lang包下的字符串类,底层实现使用享元模式,共享对象.123456789101112@Testpublic void test1()&amp;#123;    String s1 = &quot;aaa&quot;;    String s2 = &quot;aaa&quot;;    String s3 = new">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="勤奋的猪">勤奋的猪</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search">
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</ul></nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope="" itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/08/17/Java特殊对象/" title="Java特殊对象" itemprop="url">Java特殊对象</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="勤奋的猪" target="_blank" itemprop="author">勤奋的猪</a>
+		
+  </p><p class="article-time">
+    <time datetime="2018-08-17T15:29:00.000Z" itemprop="datePublished"> Published 2018-08-17</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#String缓存"><span class="toc-number">2.</span> <span class="toc-text">String缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#静态创建和new创建"><span class="toc-number">2.1.</span> <span class="toc-text">静态创建和new创建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#intern方法"><span class="toc-number">2.2.</span> <span class="toc-text">intern方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Integer缓存"><span class="toc-number">3.</span> <span class="toc-text">Integer缓存</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>java为了节省内存,会缓存部分常用数据来避免频繁创造对象.</p>
+<h3 id="String缓存"><a href="#String缓存" class="headerlink" title="String缓存"></a>String缓存</h3><h4 id="静态创建和new创建"><a href="#静态创建和new创建" class="headerlink" title="静态创建和new创建"></a>静态创建和new创建</h4><p>String是java.lang包下的字符串类,底层实现使用享元模式,共享对象.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    String s1 = <span class="string">"aaa"</span>;</span><br><span class="line">    String s2 = <span class="string">"aaa"</span>;</span><br><span class="line">    String s3 = <span class="keyword">new</span> String(<span class="string">"aaa"</span>);</span><br><span class="line">    String s4 = <span class="keyword">new</span> String(<span class="string">"aaa"</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(s1 == s2); <span class="comment">// true</span></span><br><span class="line">    System.out.println(s1 == s3); <span class="comment">// false</span></span><br><span class="line">    System.out.println(s3 == s4); <span class="comment">// false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>要解释上面的结果,这里首先要说明一下的是String的2种创建方式:<br>1.静态创建<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s1 = <span class="string">"aaa"</span>;</span><br></pre></td></tr></table></figure></p>
+<p>2.通过new关键字进行创建<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s3 = <span class="keyword">new</span> String(<span class="string">"aaa"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>当字符串使用静态创建时,会在字符串缓冲区中创建对象,然后把对象的引用返回.当下次通过静态创建方式创建相同字符串是,会直接返回字符串缓存区中对象的引用,这正是享元模式的应用.<br>当字符串对象通过new关键字进行创建时,会在堆空间分配内存.所以每次都会使用不同的内存.</p>
+<h4 id="intern方法"><a href="#intern方法" class="headerlink" title="intern方法"></a>intern方法</h4><p>String类的intern方法可以把通过new创建的对象复制一份到字符串常量池.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    String s1 = <span class="string">"aaa"</span>;</span><br><span class="line">    String s2 = <span class="keyword">new</span> String(<span class="string">"aaa"</span>);</span><br><span class="line">    String s3 = s2.intern();</span><br><span class="line"></span><br><span class="line">    System.out.println(s1 == s2); <span class="comment">// false</span></span><br><span class="line">    System.out.println(s1 == s3); <span class="comment">// true</span></span><br><span class="line">    System.out.println(s2 == s3); <span class="comment">// false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Integer缓存"><a href="#Integer缓存" class="headerlink" title="Integer缓存"></a>Integer缓存</h3><p>Integer类是基本数据类型int的包装类,因为比较常用,Java对-128到127的数据会缓存起来,重复利用.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    Integer a = <span class="number">1</span>;</span><br><span class="line">    Integer b = <span class="number">1</span>;</span><br><span class="line">    Integer c = <span class="number">128</span>;</span><br><span class="line">    Integer d = <span class="number">128</span>;</span><br><span class="line"></span><br><span class="line">    Integer e = <span class="keyword">new</span> Integer(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    Integer f = -<span class="number">1</span>;</span><br><span class="line">    Integer g = -<span class="number">1</span>;</span><br><span class="line">    Integer h = -<span class="number">128</span>;</span><br><span class="line">    Integer i = -<span class="number">128</span>;</span><br><span class="line"></span><br><span class="line">    Integer k = Integer.valueOf(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(a == b); <span class="comment">// true</span></span><br><span class="line">    System.out.println(c == d); <span class="comment">// false</span></span><br><span class="line">    System.out.println(a == e); <span class="comment">// false</span></span><br><span class="line">    System.out.println(f == g); <span class="comment">// true</span></span><br><span class="line">    System.out.println(h == i); <span class="comment">// true</span></span><br><span class="line">    System.out.println(a == k); <span class="comment">// true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当使用Integer a = 1的方式创建Integer对象时,实际上是在调用Integer.valueOf(int)方法,该方法会检查参数值得大小,当参数落在-128到127的范围,就返回JVM事先创建好的对象.否则重新创建对象.<br>使用new关键字每次都会重新创建对象.</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	<div class="share-jiathis">
+	  
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_googleplus"></a>
+	<a class="jiathis_button_douban"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+    var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",
+    
+  </script> 
+<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
+" charset="utf-8"></script>      
+
+	 </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2018/08/18/工厂方法模式/" title="工厂方法模式">
+  <strong>上一篇：</strong><br>
+  <span>
+  工厂方法模式</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/08/17/lambda表达式/" title="lambda表达式">
+ <strong>下一篇：</strong><br> 
+ <span>lambda表达式
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#String缓存"><span class="toc-number">2.</span> <span class="toc-text">String缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#静态创建和new创建"><span class="toc-number">2.1.</span> <span class="toc-text">静态创建和new创建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#intern方法"><span class="toc-number">2.2.</span> <span class="toc-text">intern方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Integer缓存"><span class="toc-number">3.</span> <span class="toc-text">Integer缓存</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/java/" title="java">java<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/多线程/" title="多线程">多线程<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/源码分析/" title="源码分析">源码分析<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>10</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>10</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/java/" title="java">java<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/源码分析/" title="源码分析">源码分析<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>4</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 学习是一种习惯 <br>
+			</p>
+	</section>
+	 
+	<div class="social-font">
+		
+		
+		<a href="https://github.com//sunzhiqiangGithub" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:731265487@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="勤奋的猪">勤奋的猪</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

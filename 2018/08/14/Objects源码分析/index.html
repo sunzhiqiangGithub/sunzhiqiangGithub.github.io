@@ -1,0 +1,468 @@
+
+ <!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  
+    <title>Objects源码分析 | 勤奋的猪</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="勤奋的猪">
+    
+
+    
+    <meta name="description" content="概述java.util.Objects是JDK1.7后新增的用来操作Object常见方法的工具类. 源码跟踪equals方法源码展示123456789101112131415161718/** * Returns &amp;#123;@code true&amp;#125; if the arguments are equal to each other * and &amp;#123;@code false&amp;#125;">
+<meta name="keywords" content="源码分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Objects源码分析">
+<meta property="og:url" content="http://yoursite.com/2018/08/14/Objects源码分析/index.html">
+<meta property="og:site_name" content="勤奋的猪">
+<meta property="og:description" content="概述java.util.Objects是JDK1.7后新增的用来操作Object常见方法的工具类. 源码跟踪equals方法源码展示123456789101112131415161718/** * Returns &amp;#123;@code true&amp;#125; if the arguments are equal to each other * and &amp;#123;@code false&amp;#125;">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-14T16:38:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Objects源码分析">
+<meta name="twitter:description" content="概述java.util.Objects是JDK1.7后新增的用来操作Object常见方法的工具类. 源码跟踪equals方法源码展示123456789101112131415161718/** * Returns &amp;#123;@code true&amp;#125; if the arguments are equal to each other * and &amp;#123;@code false&amp;#125;">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="勤奋的猪">勤奋的猪</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search">
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</ul></nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope="" itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/08/14/Objects源码分析/" title="Objects源码分析" itemprop="url">Objects源码分析</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="勤奋的猪" target="_blank" itemprop="author">勤奋的猪</a>
+		
+  </p><p class="article-time">
+    <time datetime="2018-08-14T14:07:00.000Z" itemprop="datePublished"> Published 2018-08-14</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#源码跟踪"><span class="toc-number">2.</span> <span class="toc-text">源码跟踪</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#equals方法"><span class="toc-number">2.1.</span> <span class="toc-text">equals方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#deepEquals方法"><span class="toc-number">2.2.</span> <span class="toc-text">deepEquals方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hashcode方法"><span class="toc-number">2.3.</span> <span class="toc-text">hashcode方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hash方法"><span class="toc-number">2.4.</span> <span class="toc-text">hash方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#toString方法"><span class="toc-number">2.5.</span> <span class="toc-text">toString方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#带默认值toString方法"><span class="toc-number">2.6.</span> <span class="toc-text">带默认值toString方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#compare方法"><span class="toc-number">2.7.</span> <span class="toc-text">compare方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#requireNonNull方法"><span class="toc-number">2.8.</span> <span class="toc-text">requireNonNull方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#带默认信息的requireNonNull方法"><span class="toc-number">2.9.</span> <span class="toc-text">带默认信息的requireNonNull方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#isNull方法"><span class="toc-number">2.10.</span> <span class="toc-text">isNull方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#nonNull方法"><span class="toc-number">2.11.</span> <span class="toc-text">nonNull方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#带函数接口的requireNonNull方法"><span class="toc-number">2.12.</span> <span class="toc-text">带函数接口的requireNonNull方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结论"><span class="toc-number">3.</span> <span class="toc-text">结论</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>java.util.Objects是JDK1.7后新增的用来操作Object常见方法的工具类.</p>
+<h3 id="源码跟踪"><a href="#源码跟踪" class="headerlink" title="源码跟踪"></a>源码跟踪</h3><h4 id="equals方法"><a href="#equals方法" class="headerlink" title="equals方法"></a>equals方法</h4><p><em>源码展示</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns &#123;<span class="doctag">@code</span> true&#125; if the arguments are equal to each other</span></span><br><span class="line"><span class="comment"> * and &#123;<span class="doctag">@code</span> false&#125; otherwise.</span></span><br><span class="line"><span class="comment"> * Consequently, if both arguments are &#123;<span class="doctag">@code</span> null&#125;, &#123;<span class="doctag">@code</span> true&#125;</span></span><br><span class="line"><span class="comment"> * is returned and if exactly one argument is &#123;<span class="doctag">@code</span> null&#125;, &#123;<span class="doctag">@code</span></span></span><br><span class="line"><span class="comment"> * false&#125; is returned.  Otherwise, equality is determined by using</span></span><br><span class="line"><span class="comment"> * the &#123;<span class="doctag">@link</span> Object#equals equals&#125; method of the first</span></span><br><span class="line"><span class="comment"> * argument.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> a an object</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> b an object to be compared with &#123;<span class="doctag">@code</span> a&#125; for equality</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="doctag">@code</span> true&#125; if the arguments are equal to each other</span></span><br><span class="line"><span class="comment"> * and &#123;<span class="doctag">@code</span> false&#125; otherwise</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> Object#equals(Object)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object a, Object b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (a == b) || (a != <span class="keyword">null</span> &amp;&amp; a.equals(b));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>测试代码</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testEquals</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    String str1 = <span class="string">"aaa"</span>;</span><br><span class="line">    String str2 = <span class="keyword">new</span> String(<span class="string">"aaa"</span>);</span><br><span class="line">    System.out.println(str1.equals(str2)); <span class="comment">// true</span></span><br><span class="line">    System.out.println(Objects.equals(str1,str2)); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">    Integer integer1 = <span class="number">1</span>;</span><br><span class="line">    Integer integer2 = <span class="number">1</span>;</span><br><span class="line">    System.out.println(integer1.equals(integer2)); <span class="comment">// true</span></span><br><span class="line">    System.out.println(Objects.equals(integer1,integer2)); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">    Integer integer3 = <span class="number">128</span>;</span><br><span class="line">    Integer integer4 = <span class="number">128</span>;</span><br><span class="line">    System.out.println(integer3.equals(integer4)); <span class="comment">// true</span></span><br><span class="line">    System.out.println(Objects.equals(integer3,integer4)); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">    MyObjects myObjects1 = <span class="keyword">new</span> MyObjects();</span><br><span class="line">    MyObjects myObjects2 = <span class="keyword">new</span> MyObjects();</span><br><span class="line">    System.out.println(myObjects1.equals(myObjects2)); <span class="comment">// false</span></span><br><span class="line">    System.out.println(Objects.equals(myObjects1,myObjects2)); <span class="comment">// false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>结论</em><br>Objects.equals(Object,Object)方法与Object.equals(Object)方法作用相同,但增加了空值判断,代码更加健壮.</p>
+<h4 id="deepEquals方法"><a href="#deepEquals方法" class="headerlink" title="deepEquals方法"></a>deepEquals方法</h4><p><em>源码展示</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns &#123;<span class="doctag">@code</span> true&#125; if the arguments are deeply equal to each other</span></span><br><span class="line"><span class="comment"> * and &#123;<span class="doctag">@code</span> false&#125; otherwise.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Two &#123;<span class="doctag">@code</span> null&#125; values are deeply equal.  If both arguments are</span></span><br><span class="line"><span class="comment"> * arrays, the algorithm in &#123;<span class="doctag">@link</span> Arrays#deepEquals(Object[],</span></span><br><span class="line"><span class="comment"> * Object[]) Arrays.deepEquals&#125; is used to determine equality.</span></span><br><span class="line"><span class="comment"> * Otherwise, equality is determined by using the &#123;<span class="doctag">@link</span></span></span><br><span class="line"><span class="comment"> * Object#equals equals&#125; method of the first argument.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> a an object</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> b an object to be compared with &#123;<span class="doctag">@code</span> a&#125; for deep equality</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="doctag">@code</span> true&#125; if the arguments are deeply equal to each other</span></span><br><span class="line"><span class="comment"> * and &#123;<span class="doctag">@code</span> false&#125; otherwise</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> Arrays#deepEquals(Object[], Object[])</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> Objects#equals(Object, Object)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">deepEquals</span><span class="params">(Object a, Object b)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">if</span> (a == b)</span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">     <span class="keyword">else</span> <span class="keyword">if</span> (a == <span class="keyword">null</span> || b == <span class="keyword">null</span>)</span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">     <span class="keyword">else</span></span><br><span class="line">         <span class="keyword">return</span> Arrays.deepEquals0(a, b);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>测试代码</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDeepEquals</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 比较2个对象的值是不是相等</span></span><br><span class="line">    String str1 = <span class="string">"aaa"</span>;</span><br><span class="line">    String str2 = <span class="keyword">new</span> String(<span class="string">"aaa"</span>);</span><br><span class="line">    System.out.println(Objects.deepEquals(str1,str2)); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 比较2个对象数组所存储的值是不是相等</span></span><br><span class="line">    String[] strArray1 = <span class="keyword">new</span> String[]&#123;<span class="string">"aaa"</span>,<span class="string">"bbb"</span>,<span class="string">"ccc"</span>&#125;;</span><br><span class="line">    String[] strArray2 = <span class="keyword">new</span> String[]&#123;<span class="keyword">new</span> String(<span class="string">"aaa"</span>),<span class="keyword">new</span> String(<span class="string">"bbb"</span>),<span class="keyword">new</span> String(<span class="string">"ccc"</span>)&#125;;</span><br><span class="line">    System.out.println(Objects.deepEquals(strArray1,strArray2)); <span class="comment">// true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>结论</em><br>Objects.deepEquals(Object,Object)方法,当传入的2个参数都是普通对象时,等同于Objects.equals(Object,Object);当传入的2个参数都是数组对象时,等同于Arrays.deepEquals(Object[],Object[])</p>
+<h4 id="hashcode方法"><a href="#hashcode方法" class="headerlink" title="hashcode方法"></a>hashcode方法</h4><p><em>源码展示</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns the hash code of a non-&#123;<span class="doctag">@code</span> null&#125; argument and 0 for</span></span><br><span class="line"><span class="comment"> * a &#123;<span class="doctag">@code</span> null&#125; argument.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> o an object</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> the hash code of a non-&#123;<span class="doctag">@code</span> null&#125; argument and 0 for</span></span><br><span class="line"><span class="comment"> * a &#123;<span class="doctag">@code</span> null&#125; argument</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> Object#hashCode</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> o != <span class="keyword">null</span> ? o.hashCode() : <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>测试代码</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testHashCode</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    String str1 = <span class="keyword">null</span>;</span><br><span class="line">    String str2 = <span class="string">"aaa"</span>;</span><br><span class="line">    System.out.println(Objects.hashCode(str1)); <span class="comment">// 0</span></span><br><span class="line">    System.out.println(str2.hashCode()); <span class="comment">// 96321</span></span><br><span class="line">    System.out.println(Objects.hashCode(str2)); <span class="comment">// 96321</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>结论</em><br>Objects.hashCode(Object)与Object.hashCode()方法作用相同,但增加了空值判断,代码更加健壮.</p>
+<h4 id="hash方法"><a href="#hash方法" class="headerlink" title="hash方法"></a>hash方法</h4><p><em>源码展示</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Generates a hash code for a sequence of input values. The hash</span></span><br><span class="line"><span class="comment"> * code is generated as if all the input values were placed into an</span></span><br><span class="line"><span class="comment"> * array, and that array were hashed by calling &#123;<span class="doctag">@link</span></span></span><br><span class="line"><span class="comment"> * Arrays#hashCode(Object[])&#125;.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;This method is useful for implementing &#123;<span class="doctag">@link</span></span></span><br><span class="line"><span class="comment"> * Object#hashCode()&#125; on objects containing multiple fields. For</span></span><br><span class="line"><span class="comment"> * example, if an object that has three fields, &#123;<span class="doctag">@code</span> x&#125;, &#123;<span class="doctag">@code</span></span></span><br><span class="line"><span class="comment"> * y&#125;, and &#123;<span class="doctag">@code</span> z&#125;, one could write:</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;blockquote&gt;&lt;pre&gt;</span></span><br><span class="line"><span class="comment"> * &amp;#064;Override public int hashCode() &#123;</span></span><br><span class="line"><span class="comment"> *     return Objects.hash(x, y, z);</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> * &lt;/pre&gt;&lt;/blockquote&gt;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;b&gt;Warning: When a single object reference is supplied, the returned</span></span><br><span class="line"><span class="comment"> * value does not equal the hash code of that object reference.&lt;/b&gt; This</span></span><br><span class="line"><span class="comment"> * value can be computed by calling &#123;<span class="doctag">@link</span> #hashCode(Object)&#125;.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> values the values to be hashed</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> a hash value of the sequence of input values</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> Arrays#hashCode(Object[])</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> List#hashCode</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(Object... values)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> Arrays.hashCode(values);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>测试代码</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testHash</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    String[] strArray = <span class="keyword">new</span> String[]&#123;<span class="string">"aaa"</span>,<span class="string">"bbb"</span>,<span class="string">"ccc"</span>&#125;;</span><br><span class="line">    System.out.println(Arrays.hashCode(strArray)); <span class="comment">// 95709313</span></span><br><span class="line">    System.out.println(Objects.hash(strArray)); <span class="comment">// 95709313</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>结论</em><br>Objects.hash(Object[])与Arrays.hashCode(Object[])作用完全相同.</p>
+<h4 id="toString方法"><a href="#toString方法" class="headerlink" title="toString方法"></a>toString方法</h4><p><em>源码展示</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns the result of calling &#123;<span class="doctag">@code</span> toString&#125; for a non-&#123;<span class="doctag">@code</span></span></span><br><span class="line"><span class="comment"> * null&#125; argument and &#123;<span class="doctag">@code</span> "null"&#125; for a &#123;<span class="doctag">@code</span> null&#125; argument.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> o an object</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> the result of calling &#123;<span class="doctag">@code</span> toString&#125; for a non-&#123;<span class="doctag">@code</span></span></span><br><span class="line"><span class="comment"> * null&#125; argument and &#123;<span class="doctag">@code</span> "null"&#125; for a &#123;<span class="doctag">@code</span> null&#125; argument</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> Object#toString</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> String#valueOf(Object)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">toString</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> String.valueOf(o);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>测试代码</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testToString</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    Integer integer = <span class="number">200</span>;</span><br><span class="line">    System.out.println(integer.toString()); <span class="comment">// 200</span></span><br><span class="line">    System.out.println(Objects.toString(integer)); <span class="comment">// 200</span></span><br><span class="line"></span><br><span class="line">    MyObjects myObjects = <span class="keyword">new</span> MyObjects();</span><br><span class="line">    System.out.println(myObjects.toString()); <span class="comment">// cn.com.sunzhiqiang.java.objects.MyObjects@1794d431</span></span><br><span class="line">    System.out.println(Objects.toString(myObjects)); <span class="comment">// cn.com.sunzhiqiang.java.objects.MyObjects@1794d431</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>结论</em><br>Objects.toString(Object)和Object.toString()实现功能基本相同.</p>
+<h4 id="带默认值toString方法"><a href="#带默认值toString方法" class="headerlink" title="带默认值toString方法"></a>带默认值toString方法</h4><p><em>源码展示</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns the result of calling &#123;<span class="doctag">@code</span> toString&#125; on the first</span></span><br><span class="line"><span class="comment"> * argument if the first argument is not &#123;<span class="doctag">@code</span> null&#125; and returns</span></span><br><span class="line"><span class="comment"> * the second argument otherwise.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> o an object</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> nullDefault string to return if the first argument is</span></span><br><span class="line"><span class="comment"> *        &#123;<span class="doctag">@code</span> null&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> the result of calling &#123;<span class="doctag">@code</span> toString&#125; on the first</span></span><br><span class="line"><span class="comment"> * argument if it is not &#123;<span class="doctag">@code</span> null&#125; and the second argument</span></span><br><span class="line"><span class="comment"> * otherwise.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> Objects#toString(Object)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">toString</span><span class="params">(Object o, String nullDefault)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (o != <span class="keyword">null</span>) ? o.toString() : nullDefault;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>测试代码</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testToStringHasDefaultValue</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    String str1 = <span class="keyword">null</span>;</span><br><span class="line">    String str2 = <span class="string">"bbb"</span>;</span><br><span class="line">    System.out.println(Objects.toString(str1,<span class="string">"aaa"</span>)); <span class="comment">// aaa</span></span><br><span class="line">    System.out.println(Objects.toString(str2,<span class="string">"aaa"</span>)); <span class="comment">// bbb</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>结论</em><br>Objects.toString(Object,String)当参数Object为空时,返回String参数的值,否则返回Object.toString().</p>
+<h4 id="compare方法"><a href="#compare方法" class="headerlink" title="compare方法"></a>compare方法</h4><p><em>源码展示</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns 0 if the arguments are identical and &#123;<span class="doctag">@code</span></span></span><br><span class="line"><span class="comment"> * c.compare(a, b)&#125; otherwise.</span></span><br><span class="line"><span class="comment"> * Consequently, if both arguments are &#123;<span class="doctag">@code</span> null&#125; 0</span></span><br><span class="line"><span class="comment"> * is returned.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;Note that if one of the arguments is &#123;<span class="doctag">@code</span> null&#125;, a &#123;<span class="doctag">@code</span></span></span><br><span class="line"><span class="comment"> * NullPointerException&#125; may or may not be thrown depending on</span></span><br><span class="line"><span class="comment"> * what ordering policy, if any, the &#123;<span class="doctag">@link</span> Comparator Comparator&#125;</span></span><br><span class="line"><span class="comment"> * chooses to have for &#123;<span class="doctag">@code</span> null&#125; values.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &lt;T&gt; the type of the objects being compared</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> a an object</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> b an object to be compared with &#123;<span class="doctag">@code</span> a&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> c the &#123;<span class="doctag">@code</span> Comparator&#125; to compare the first two arguments</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 0 if the arguments are identical and &#123;<span class="doctag">@code</span></span></span><br><span class="line"><span class="comment"> * c.compare(a, b)&#125; otherwise.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> Comparable</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> Comparator</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">int</span> <span class="title">compare</span><span class="params">(T a, T b, Comparator&lt;? <span class="keyword">super</span> T&gt; c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (a == b) ? <span class="number">0</span> :  c.compare(a, b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>测试代码</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCompare</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    Integer a = <span class="number">6</span>;</span><br><span class="line">    Integer b = <span class="number">8</span>;</span><br><span class="line">    System.out.println(Objects.compare(a, b, <span class="keyword">new</span> Comparator&lt;Integer&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Integer o1, Integer o2)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(o1 &gt; o2)</span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span>(o1 &lt; o2)</span><br><span class="line">                <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)); <span class="comment">// -1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>结论</em><br>Objects.compare(T,T,Comparator&lt;? super T&gt;)方法可以通过自定义比较器进行2个元素的比较.</p>
+<h4 id="requireNonNull方法"><a href="#requireNonNull方法" class="headerlink" title="requireNonNull方法"></a>requireNonNull方法</h4><p><em>源码展示</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Checks that the specified object reference is not &#123;<span class="doctag">@code</span> null&#125;. This</span></span><br><span class="line"><span class="comment"> * method is designed primarily for doing parameter validation in methods</span></span><br><span class="line"><span class="comment"> * and constructors, as demonstrated below:</span></span><br><span class="line"><span class="comment"> * &lt;blockquote&gt;&lt;pre&gt;</span></span><br><span class="line"><span class="comment"> * public Foo(Bar bar) &#123;</span></span><br><span class="line"><span class="comment"> *     this.bar = Objects.requireNonNull(bar);</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> * &lt;/pre&gt;&lt;/blockquote&gt;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> obj the object reference to check for nullity</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &lt;T&gt; the type of the reference</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="doctag">@code</span> obj&#125; if not &#123;<span class="doctag">@code</span> null&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> NullPointerException if &#123;<span class="doctag">@code</span> obj&#125; is &#123;<span class="doctag">@code</span> null&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">requireNonNull</span><span class="params">(T obj)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (obj == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>测试代码</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRequireNonNull</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    String str = <span class="keyword">null</span>;</span><br><span class="line">    String str2 = <span class="string">"abc"</span>;</span><br><span class="line">    System.out.println(Objects.requireNonNull(str)); <span class="comment">// java.lang.NullPointerException</span></span><br><span class="line">    System.out.println(Objects.requireNonNull(str2)); <span class="comment">// abc</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>结论</em><br>Objects.requireNonNull(T)可以用来检查参数是否为空,在JDK源码里,大量使用它来检查输入参数的合法性.</p>
+<h4 id="带默认信息的requireNonNull方法"><a href="#带默认信息的requireNonNull方法" class="headerlink" title="带默认信息的requireNonNull方法"></a>带默认信息的requireNonNull方法</h4><p><em>源码展示</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Checks that the specified object reference is not &#123;<span class="doctag">@code</span> null&#125; and</span></span><br><span class="line"><span class="comment"> * throws a customized &#123;<span class="doctag">@link</span> NullPointerException&#125; if it is. This method</span></span><br><span class="line"><span class="comment"> * is designed primarily for doing parameter validation in methods and</span></span><br><span class="line"><span class="comment"> * constructors with multiple parameters, as demonstrated below:</span></span><br><span class="line"><span class="comment"> * &lt;blockquote&gt;&lt;pre&gt;</span></span><br><span class="line"><span class="comment"> * public Foo(Bar bar, Baz baz) &#123;</span></span><br><span class="line"><span class="comment"> *     this.bar = Objects.requireNonNull(bar, "bar must not be null");</span></span><br><span class="line"><span class="comment"> *     this.baz = Objects.requireNonNull(baz, "baz must not be null");</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> * &lt;/pre&gt;&lt;/blockquote&gt;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> obj     the object reference to check for nullity</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> message detail message to be used in the event that a &#123;<span class="doctag">@code</span></span></span><br><span class="line"><span class="comment"> *                NullPointerException&#125; is thrown</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &lt;T&gt; the type of the reference</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="doctag">@code</span> obj&#125; if not &#123;<span class="doctag">@code</span> null&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> NullPointerException if &#123;<span class="doctag">@code</span> obj&#125; is &#123;<span class="doctag">@code</span> null&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">requireNonNull</span><span class="params">(T obj, String message)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (obj == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(message);</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>测试代码</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRequireNotNullHasDefaultMessage</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    String str = <span class="keyword">null</span>;</span><br><span class="line">    String str2 = <span class="string">"abc"</span>;</span><br><span class="line">    System.out.println(Objects.requireNonNull(str,<span class="string">"参数不能为空"</span>)); <span class="comment">// java.lang.NullPointerException: 参数不能为空</span></span><br><span class="line">    System.out.println(Objects.requireNonNull(str2,<span class="string">"参数不能为空"</span>)); <span class="comment">// abc</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>结论</em><br>Objects.requireNotNull(T,String)在检查输入参数是否为空的同时提供了,当为空的时候,指定异常信息的功能.</p>
+<h4 id="isNull方法"><a href="#isNull方法" class="headerlink" title="isNull方法"></a>isNull方法</h4><p><em>源码展示</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns &#123;<span class="doctag">@code</span> true&#125; if the provided reference is &#123;<span class="doctag">@code</span> null&#125; otherwise</span></span><br><span class="line"><span class="comment"> * returns &#123;<span class="doctag">@code</span> false&#125;.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@apiNote</span> This method exists to be used as a</span></span><br><span class="line"><span class="comment"> * &#123;<span class="doctag">@link</span> java.util.function.Predicate&#125;, &#123;<span class="doctag">@code</span> filter(Objects::isNull)&#125;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> obj a reference to be checked against &#123;<span class="doctag">@code</span> null&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="doctag">@code</span> true&#125; if the provided reference is &#123;<span class="doctag">@code</span> null&#125; otherwise</span></span><br><span class="line"><span class="comment"> * &#123;<span class="doctag">@code</span> false&#125;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> java.util.function.Predicate</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 1.8</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isNull</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> obj == <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>测试代码</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testIsNull</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    String str = <span class="keyword">null</span>;</span><br><span class="line">    String str2 = <span class="string">"abc"</span>;</span><br><span class="line">    System.out.println(Objects.isNull(str)); <span class="comment">// true</span></span><br><span class="line">    System.out.println(Objects.isNull(str2)); <span class="comment">// false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>结论</em><br>Object.isNull(Object)方法可以判断输入参数是否为空,感觉有点鸡肋.</p>
+<h4 id="nonNull方法"><a href="#nonNull方法" class="headerlink" title="nonNull方法"></a>nonNull方法</h4><p><em>源码展示</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns &#123;<span class="doctag">@code</span> true&#125; if the provided reference is non-&#123;<span class="doctag">@code</span> null&#125;</span></span><br><span class="line"><span class="comment"> * otherwise returns &#123;<span class="doctag">@code</span> false&#125;.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@apiNote</span> This method exists to be used as a</span></span><br><span class="line"><span class="comment"> * &#123;<span class="doctag">@link</span> java.util.function.Predicate&#125;, &#123;<span class="doctag">@code</span> filter(Objects::nonNull)&#125;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> obj a reference to be checked against &#123;<span class="doctag">@code</span> null&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="doctag">@code</span> true&#125; if the provided reference is non-&#123;<span class="doctag">@code</span> null&#125;</span></span><br><span class="line"><span class="comment"> * otherwise &#123;<span class="doctag">@code</span> false&#125;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> java.util.function.Predicate</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 1.8</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">nonNull</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> obj != <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>测试代码</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testNonNull</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    String str = <span class="keyword">null</span>;</span><br><span class="line">    String str2 = <span class="string">"abc"</span>;</span><br><span class="line">    System.out.println(Objects.nonNull(str)); <span class="comment">// false</span></span><br><span class="line">    System.out.println(Objects.nonNull(str2)); <span class="comment">// true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>结论</em><br>判断是不是非空,同isNull方法一样,有点鸡肋.</p>
+<h4 id="带函数接口的requireNonNull方法"><a href="#带函数接口的requireNonNull方法" class="headerlink" title="带函数接口的requireNonNull方法"></a>带函数接口的requireNonNull方法</h4><p><em>源码展示</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Checks that the specified object reference is not &#123;<span class="doctag">@code</span> null&#125; and</span></span><br><span class="line"><span class="comment"> * throws a customized &#123;<span class="doctag">@link</span> NullPointerException&#125; if it is.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;Unlike the method &#123;<span class="doctag">@link</span> #requireNonNull(Object, String)&#125;,</span></span><br><span class="line"><span class="comment"> * this method allows creation of the message to be deferred until</span></span><br><span class="line"><span class="comment"> * after the null check is made. While this may confer a</span></span><br><span class="line"><span class="comment"> * performance advantage in the non-null case, when deciding to</span></span><br><span class="line"><span class="comment"> * call this method care should be taken that the costs of</span></span><br><span class="line"><span class="comment"> * creating the message supplier are less than the cost of just</span></span><br><span class="line"><span class="comment"> * creating the string message directly.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> obj     the object reference to check for nullity</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> messageSupplier supplier of the detail message to be</span></span><br><span class="line"><span class="comment"> * used in the event that a &#123;<span class="doctag">@code</span> NullPointerException&#125; is thrown</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &lt;T&gt; the type of the reference</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="doctag">@code</span> obj&#125; if not &#123;<span class="doctag">@code</span> null&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> NullPointerException if &#123;<span class="doctag">@code</span> obj&#125; is &#123;<span class="doctag">@code</span> null&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 1.8</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">requireNonNull</span><span class="params">(T obj, Supplier&lt;String&gt; messageSupplier)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (obj == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(messageSupplier.get());</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>测试代码</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRequireNonNullHasFunctionInterface</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    String str = <span class="keyword">null</span>;</span><br><span class="line">    String str2 = <span class="string">"abc"</span>;</span><br><span class="line">    System.out.println(Objects.requireNonNull(str,() -&gt; &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"参数不能为空"</span>;</span><br><span class="line">    &#125;)); <span class="comment">//return java.lang.NullPointerException: 参数不能为空</span></span><br><span class="line">    System.out.println(Objects.requireNonNull(str2,() -&gt; &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"参数不能为空"</span>;</span><br><span class="line">    &#125;)); <span class="comment">// abc</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>结论</em><br>判断输入参数是否为空,需要配合lambda表达式一起使用.</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>Objects是JDK提供的操作Object常用方法的工具类,建议在使用Object常用方法时,优先使用Objects.</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/源码分析/">源码分析</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/源码分析/">源码分析</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	<div class="share-jiathis">
+	  
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_googleplus"></a>
+	<a class="jiathis_button_douban"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+    var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",
+    
+  </script> 
+<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
+" charset="utf-8"></script>      
+
+	 </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2018/08/15/享元模式/" title="享元模式">
+  <strong>上一篇：</strong><br>
+  <span>
+  享元模式</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/08/12/ThreadLocal源码分析/" title="ThreadLocal源码分析">
+ <strong>下一篇：</strong><br> 
+ <span>ThreadLocal源码分析
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#源码跟踪"><span class="toc-number">2.</span> <span class="toc-text">源码跟踪</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#equals方法"><span class="toc-number">2.1.</span> <span class="toc-text">equals方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#deepEquals方法"><span class="toc-number">2.2.</span> <span class="toc-text">deepEquals方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hashcode方法"><span class="toc-number">2.3.</span> <span class="toc-text">hashcode方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hash方法"><span class="toc-number">2.4.</span> <span class="toc-text">hash方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#toString方法"><span class="toc-number">2.5.</span> <span class="toc-text">toString方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#带默认值toString方法"><span class="toc-number">2.6.</span> <span class="toc-text">带默认值toString方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#compare方法"><span class="toc-number">2.7.</span> <span class="toc-text">compare方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#requireNonNull方法"><span class="toc-number">2.8.</span> <span class="toc-text">requireNonNull方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#带默认信息的requireNonNull方法"><span class="toc-number">2.9.</span> <span class="toc-text">带默认信息的requireNonNull方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#isNull方法"><span class="toc-number">2.10.</span> <span class="toc-text">isNull方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#nonNull方法"><span class="toc-number">2.11.</span> <span class="toc-text">nonNull方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#带函数接口的requireNonNull方法"><span class="toc-number">2.12.</span> <span class="toc-text">带函数接口的requireNonNull方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结论"><span class="toc-number">3.</span> <span class="toc-text">结论</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/java/" title="java">java<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/多线程/" title="多线程">多线程<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/源码分析/" title="源码分析">源码分析<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>10</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>10</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/java/" title="java">java<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/源码分析/" title="源码分析">源码分析<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>4</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 学习是一种习惯 <br>
+			</p>
+	</section>
+	 
+	<div class="social-font">
+		
+		
+		<a href="https://github.com//sunzhiqiangGithub" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:731265487@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="勤奋的猪">勤奋的猪</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

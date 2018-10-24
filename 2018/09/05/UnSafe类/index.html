@@ -1,0 +1,447 @@
+
+ <!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  
+    <title>Unsafe类 | 勤奋的猪</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="勤奋的猪">
+    
+
+    
+    <meta name="description" content="概述Unsafe类是一个不建议使用的类,就像名字一样,是一个不安全的类.这个类有着直接操作内存,不执行初始化就创建对象,以及很多的CAS方法等等.功能非常强大.所以,虽然不建议使用,但还是很有必要了解这个类,而且JAVA9把这个类修改为可以直接创建对象使用,说明以后它的用途可能会越来越广.有必要系统的学习一下这个类. 功能学习创建Unsafe类的对象Unsafe类的对象在应用程序里不能直接创建,因">
+<meta name="keywords" content="多线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unsafe类">
+<meta property="og:url" content="http://yoursite.com/2018/09/05/UnSafe类/index.html">
+<meta property="og:site_name" content="勤奋的猪">
+<meta property="og:description" content="概述Unsafe类是一个不建议使用的类,就像名字一样,是一个不安全的类.这个类有着直接操作内存,不执行初始化就创建对象,以及很多的CAS方法等等.功能非常强大.所以,虽然不建议使用,但还是很有必要了解这个类,而且JAVA9把这个类修改为可以直接创建对象使用,说明以后它的用途可能会越来越广.有必要系统的学习一下这个类. 功能学习创建Unsafe类的对象Unsafe类的对象在应用程序里不能直接创建,因">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-09-09T13:36:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Unsafe类">
+<meta name="twitter:description" content="概述Unsafe类是一个不建议使用的类,就像名字一样,是一个不安全的类.这个类有着直接操作内存,不执行初始化就创建对象,以及很多的CAS方法等等.功能非常强大.所以,虽然不建议使用,但还是很有必要了解这个类,而且JAVA9把这个类修改为可以直接创建对象使用,说明以后它的用途可能会越来越广.有必要系统的学习一下这个类. 功能学习创建Unsafe类的对象Unsafe类的对象在应用程序里不能直接创建,因">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="勤奋的猪">勤奋的猪</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search">
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</ul></nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope="" itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/09/05/UnSafe类/" title="Unsafe类" itemprop="url">Unsafe类</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="勤奋的猪" target="_blank" itemprop="author">勤奋的猪</a>
+		
+  </p><p class="article-time">
+    <time datetime="2018-09-05T15:17:00.000Z" itemprop="datePublished"> Published 2018-09-05</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#功能学习"><span class="toc-number">2.</span> <span class="toc-text">功能学习</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建Unsafe类的对象"><span class="toc-number">2.1.</span> <span class="toc-text">创建Unsafe类的对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#操作实例变量的值"><span class="toc-number">2.2.</span> <span class="toc-text">操作实例变量的值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#操作类变量"><span class="toc-number">2.3.</span> <span class="toc-text">操作类变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#操作数组"><span class="toc-number">2.4.</span> <span class="toc-text">操作数组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#操作内存"><span class="toc-number">2.5.</span> <span class="toc-text">操作内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#操作内存绝对地址"><span class="toc-number">2.6.</span> <span class="toc-text">操作内存绝对地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建其他类的对象"><span class="toc-number">2.7.</span> <span class="toc-text">创建其他类的对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实现锁机制"><span class="toc-number">2.8.</span> <span class="toc-text">实现锁机制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#checked异常转unchecked异常"><span class="toc-number">2.9.</span> <span class="toc-text">checked异常转unchecked异常</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CAS-Compare-And-Swap"><span class="toc-number">2.10.</span> <span class="toc-text">CAS(Compare And Swap)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#支持volatile原语的get和set"><span class="toc-number">2.11.</span> <span class="toc-text">支持volatile原语的get和set</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#park和unpark"><span class="toc-number">2.12.</span> <span class="toc-text">park和unpark</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#原子更新数据"><span class="toc-number">2.13.</span> <span class="toc-text">原子更新数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结语"><span class="toc-number">3.</span> <span class="toc-text">结语</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Unsafe类是一个不建议使用的类,就像名字一样,是一个不安全的类.这个类有着直接操作内存,不执行初始化就创建对象,以及很多的CAS方法等等.功能非常强大.<br>所以,虽然不建议使用,但还是很有必要了解这个类,而且JAVA9把这个类修改为可以直接创建对象使用,说明以后它的用途可能会越来越广.有必要系统的学习一下这个类.</p>
+<h3 id="功能学习"><a href="#功能学习" class="headerlink" title="功能学习"></a>功能学习</h3><h4 id="创建Unsafe类的对象"><a href="#创建Unsafe类的对象" class="headerlink" title="创建Unsafe类的对象"></a>创建Unsafe类的对象</h4><p>Unsafe类的对象在应用程序里不能直接创建,因为该类只能由启动类加载器来加载.但可以使用反射来创建该类的对象.(JAVA9好像可以直接创建该类的对象了)<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Unsafe类创建对象</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> NoSuchFieldException</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> IllegalAccessException</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Unsafe <span class="title">getUnsafe</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchFieldException, IllegalAccessException </span>&#123;</span><br><span class="line">    <span class="comment">// Unsafe对象的创建</span></span><br><span class="line">    Field field = Unsafe.class.getDeclaredField(<span class="string">"theUnsafe"</span>);</span><br><span class="line">    field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">    Unsafe unsafe = (Unsafe) field.get(<span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">return</span> unsafe;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="操作实例变量的值"><a href="#操作实例变量的值" class="headerlink" title="操作实例变量的值"></a>操作实例变量的值</h4><p>该类所有的实例变量<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 功能描述: UnSafe类学习</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sunzhiqiang</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2018-09-05</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UnsafeStudy</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> b = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> c = <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">long</span> e = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> a = <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> d = <span class="number">4</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>操作实例变量的代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 测试获取对象的值和设置对象的值</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> unsafe</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> NoSuchFieldException</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testObjectField</span><span class="params">(Unsafe unsafe)</span> <span class="keyword">throws</span> NoSuchFieldException </span>&#123;</span><br><span class="line">    InnerClass innerClass = <span class="keyword">new</span> UnsafeStudy().new InnerClass();</span><br><span class="line">    <span class="keyword">int</span> a = unsafe.getInt(innerClass, unsafe.objectFieldOffset(InnerClass.class.getDeclaredField(<span class="string">"a"</span>)));</span><br><span class="line">    System.out.println(<span class="string">"通过getInt获取的对象的实例变量值:"</span> + a);</span><br><span class="line">    unsafe.putInt(innerClass, unsafe.objectFieldOffset(InnerClass.class.getDeclaredField(<span class="string">"a"</span>)), <span class="number">3</span>);</span><br><span class="line">    System.out.println(<span class="string">"通过putInt重新设置值后:"</span> + innerClass.a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="操作类变量"><a href="#操作类变量" class="headerlink" title="操作类变量"></a>操作类变量</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取和设置静态字段的值</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> unsafe</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> NoSuchFieldException</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testStaticField</span><span class="params">(Unsafe unsafe)</span> <span class="keyword">throws</span> NoSuchFieldException </span>&#123;</span><br><span class="line">    Object obj = unsafe.staticFieldBase(UnsafeStudy.class.getDeclaredField(<span class="string">"c"</span>));</span><br><span class="line">    <span class="keyword">long</span> staticFieldOffset = unsafe.staticFieldOffset(UnsafeStudy.class.getDeclaredField(<span class="string">"c"</span>));</span><br><span class="line">    <span class="keyword">long</span> staticFieldValue = unsafe.getInt(obj, staticFieldOffset);</span><br><span class="line">    System.out.println(staticFieldValue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="操作数组"><a href="#操作数组" class="headerlink" title="操作数组"></a>操作数组</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 测试操作数组</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> unsafe</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testArray</span><span class="params">(Unsafe unsafe)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[] intArray = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> base = unsafe.arrayBaseOffset(<span class="keyword">int</span>[].class);</span><br><span class="line">    <span class="keyword">int</span> offset = unsafe.arrayIndexScale(<span class="keyword">int</span>[].class);</span><br><span class="line">    System.out.println(<span class="string">"数组中第一个元素的值:"</span> + unsafe.getInt(intArray, base));</span><br><span class="line">    System.out.println(<span class="string">"数组中第二个元素的值:"</span> + unsafe.getInt(intArray, base + offset));</span><br><span class="line">    unsafe.putInt(intArray, base + offset, <span class="number">8</span>);</span><br><span class="line">    System.out.println(<span class="string">"重新设置数组中第二个元素的值:"</span> + unsafe.getInt(intArray, base + offset));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="操作内存"><a href="#操作内存" class="headerlink" title="操作内存"></a>操作内存</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Unsafe类分配内存,设置值,重新分配内存,复制内存释放内存</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> unsafe</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> InterruptedException</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testMemory</span><span class="params">(Unsafe unsafe)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    <span class="keyword">long</span> memoryAddress = unsafe.allocateMemory(<span class="number">1</span>);</span><br><span class="line">    System.out.println(<span class="string">"分配的内存地址为:"</span> + memoryAddress);</span><br><span class="line">    unsafe.setMemory(memoryAddress, <span class="number">1</span>, (<span class="keyword">byte</span>) <span class="number">1</span>);</span><br><span class="line">    System.out.println(<span class="string">"设置内存里的数据为:"</span> + unsafe.getByte(memoryAddress));</span><br><span class="line">    <span class="keyword">long</span> secondAddress = unsafe.reallocateMemory(memoryAddress, <span class="number">1</span>);</span><br><span class="line">    System.out.println(<span class="string">"重新分配的内存地址为:"</span> + secondAddress);</span><br><span class="line">    unsafe.setMemory(secondAddress, <span class="number">1</span>, (<span class="keyword">byte</span>) <span class="number">2</span>);</span><br><span class="line">    System.out.println(<span class="string">"设置内存里的数据为:"</span> + unsafe.getByte(secondAddress));</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"测试内存复制"</span>);</span><br><span class="line">    <span class="keyword">long</span> oneAddress = unsafe.allocateMemory(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">long</span> twoAddress = unsafe.allocateMemory(<span class="number">1</span>);</span><br><span class="line">    unsafe.setMemory(oneAddress, <span class="number">1</span>, (<span class="keyword">byte</span>) <span class="number">1</span>);</span><br><span class="line">    unsafe.setMemory(twoAddress, <span class="number">1</span>, (<span class="keyword">byte</span>) <span class="number">2</span>);</span><br><span class="line">    System.out.println(<span class="string">"被复制的值:"</span> + unsafe.getByte(oneAddress));</span><br><span class="line">    System.out.println(<span class="string">"复制前:"</span> + unsafe.getByte(twoAddress));</span><br><span class="line">    unsafe.copyMemory(oneAddress, twoAddress, <span class="number">1</span>);</span><br><span class="line">    System.out.println(<span class="string">"复制后:"</span> + unsafe.getByte(twoAddress));</span><br><span class="line"></span><br><span class="line">    unsafe.freeMemory(memoryAddress);</span><br><span class="line">    unsafe.freeMemory(secondAddress);</span><br><span class="line">    unsafe.freeMemory(oneAddress);</span><br><span class="line">    unsafe.freeMemory(twoAddress);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="操作内存绝对地址"><a href="#操作内存绝对地址" class="headerlink" title="操作内存绝对地址"></a>操作内存绝对地址</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 测试操作address相关</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> unsafe</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testAddress</span><span class="params">(Unsafe unsafe)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">long</span> memoryAddress = unsafe.allocateMemory(<span class="number">1</span>);</span><br><span class="line">    System.out.println(<span class="string">"分配的内存地址为:"</span> + memoryAddress);</span><br><span class="line">    unsafe.putAddress(memoryAddress, <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">long</span> value = unsafe.getAddress(memoryAddress);</span><br><span class="line">    System.out.println(<span class="string">"getAddress方法获取的值为:"</span> + value);</span><br><span class="line">    System.out.println(<span class="string">"getByte方法获取的值:"</span> + unsafe.getByte(memoryAddress));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="创建其他类的对象"><a href="#创建其他类的对象" class="headerlink" title="创建其他类的对象"></a>创建其他类的对象</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用Unsafe类创建对象</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> unsafe</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> InstantiationException</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testCreateInstance</span><span class="params">(Unsafe unsafe)</span> <span class="keyword">throws</span> InstantiationException </span>&#123;</span><br><span class="line">    UnsafeStudy unsafeStudy = UnsafeStudy.class.cast(unsafe.allocateInstance(UnsafeStudy.class));</span><br><span class="line">    UnsafeStudy unsafeStudy1 = <span class="keyword">new</span> UnsafeStudy();</span><br><span class="line">    System.out.println(<span class="string">"通过new关键字创建的对象的实例变量:"</span> + unsafeStudy1.b);</span><br><span class="line">    System.out.println(<span class="string">"通过new关键字创建的对象的静态变量:"</span> + unsafeStudy1.c);</span><br><span class="line">    System.out.println(<span class="string">"通过allocateInstance创建的对象的实例变量:"</span> + unsafeStudy.b);</span><br><span class="line">    System.out.println(<span class="string">"通过allocateInstance创建的对象的静态变量:"</span> + unsafeStudy.c);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="实现锁机制"><a href="#实现锁机制" class="headerlink" title="实现锁机制"></a>实现锁机制</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Unsafe实现锁相关操作</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> unsafe</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> InterruptedException</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testMonitor</span><span class="params">(Unsafe unsafe)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    ExecutorService executorService = Executors.newFixedThreadPool(<span class="number">4</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">        executorService.submit(() -&gt; testLock(unsafe));</span><br><span class="line">    &#125;</span><br><span class="line">    unsafe.tryMonitorEnter(UnsafeStudy.class);</span><br><span class="line">    System.out.println(<span class="string">"主线程获取到锁"</span>);</span><br><span class="line">    UnsafeStudy.c++;</span><br><span class="line">    Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">    System.out.println(<span class="string">"等待结束"</span>);</span><br><span class="line">    unsafe.monitorExit(UnsafeStudy.class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testLock</span><span class="params">(Unsafe unsafe)</span> </span>&#123;</span><br><span class="line">    unsafe.monitorEnter(UnsafeStudy.class);</span><br><span class="line">    System.out.println(<span class="string">"当前线程为:"</span> + Thread.currentThread().getName());</span><br><span class="line">    System.out.println(<span class="string">"测试monitor,i = "</span> + UnsafeStudy.c++);</span><br><span class="line">    unsafe.monitorExit(UnsafeStudy.class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="checked异常转unchecked异常"><a href="#checked异常转unchecked异常" class="headerlink" title="checked异常转unchecked异常"></a>checked异常转unchecked异常</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 异常相关</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> unsafe</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testException</span><span class="params">(Unsafe unsafe)</span> </span>&#123;</span><br><span class="line">    unsafe.throwException(<span class="keyword">new</span> Exception(<span class="string">"异常测试"</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="CAS-Compare-And-Swap"><a href="#CAS-Compare-And-Swap" class="headerlink" title="CAS(Compare And Swap)"></a>CAS(Compare And Swap)</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * CAS相关</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> unsafe</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> NoSuchFieldException</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testCAS</span><span class="params">(Unsafe unsafe)</span> <span class="keyword">throws</span> NoSuchFieldException </span>&#123;</span><br><span class="line">    UnsafeStudy unsafeStudy = <span class="keyword">new</span> UnsafeStudy();</span><br><span class="line">    <span class="keyword">long</span> offset = unsafe.objectFieldOffset(UnsafeStudy.class.getDeclaredField(<span class="string">"b"</span>));</span><br><span class="line">    System.out.println(unsafe.compareAndSwapInt(unsafeStudy, offset, <span class="number">2</span>, <span class="number">3</span>));</span><br><span class="line">    System.out.println(unsafe.compareAndSwapInt(unsafeStudy, offset, <span class="number">2</span>, <span class="number">3</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="支持volatile原语的get和set"><a href="#支持volatile原语的get和set" class="headerlink" title="支持volatile原语的get和set"></a>支持volatile原语的get和set</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 测试支持volatile语意的设置和获取</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> unsafe</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> NoSuchFieldException</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testVolatilePutAndGet</span><span class="params">(Unsafe unsafe)</span> <span class="keyword">throws</span> NoSuchFieldException, BrokenBarrierException, InterruptedException </span>&#123;</span><br><span class="line">    UnsafeStudy unsafeStudy = <span class="keyword">new</span> UnsafeStudy();</span><br><span class="line">    <span class="keyword">long</span> offset = unsafe.objectFieldOffset(UnsafeStudy.class.getDeclaredField(<span class="string">"e"</span>));</span><br><span class="line">    ExecutorService executorService = Executors.newFixedThreadPool(<span class="number">2</span>);</span><br><span class="line">    CyclicBarrier cyclicBarrier = <span class="keyword">new</span> CyclicBarrier(<span class="number">3</span>);</span><br><span class="line">    System.out.println(<span class="string">"第一轮执行getLong测试开始"</span>);</span><br><span class="line">    executorService.submit(() -&gt; &#123;</span><br><span class="line">        unsafe.putLong(unsafeStudy, offset, <span class="number">3</span>);</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">"设置值为:"</span> + unsafeStudy.e);</span><br><span class="line">        cyclicBarrier.await();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">    executorService.submit(() -&gt; &#123;</span><br><span class="line">        <span class="keyword">long</span> value = unsafe.getLong(unsafeStudy, offset);</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">"获取值为:"</span> + value);</span><br><span class="line">        cyclicBarrier.await();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">    cyclicBarrier.await();</span><br><span class="line">    System.out.println(<span class="string">"第一轮测试结束"</span>);</span><br><span class="line"></span><br><span class="line">    cyclicBarrier.reset();</span><br><span class="line">    System.out.println(<span class="string">"第二轮执行getLongVolatile测试开始"</span>);</span><br><span class="line">    executorService.submit(() -&gt; &#123;</span><br><span class="line">        unsafe.putLongVolatile(unsafeStudy, offset, <span class="number">4</span>);</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">"设置值为:"</span> + unsafeStudy.e);</span><br><span class="line">        cyclicBarrier.await();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">    executorService.submit(() -&gt; &#123;</span><br><span class="line">        <span class="keyword">long</span> value = unsafe.getLongVolatile(unsafeStudy, offset);</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">"获取值为:"</span> + value);</span><br><span class="line">        cyclicBarrier.await();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">    cyclicBarrier.await();</span><br><span class="line">    System.out.println(<span class="string">"第二轮测试结束"</span>);</span><br><span class="line"></span><br><span class="line">    cyclicBarrier.reset();</span><br><span class="line">    System.out.println(<span class="string">"第三轮执行putOrderLong测试开始"</span>);</span><br><span class="line">    executorService.submit(() -&gt; &#123;</span><br><span class="line">        unsafe.putOrderedLong(unsafeStudy, offset, <span class="number">5</span>);</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">"设置值为:"</span> + unsafeStudy.e);</span><br><span class="line">        cyclicBarrier.await();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">    executorService.submit(() -&gt; &#123;</span><br><span class="line">        <span class="keyword">long</span> value = unsafe.getLong(unsafeStudy, offset);</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">"获取值为:"</span> + value);</span><br><span class="line">        cyclicBarrier.await();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">    cyclicBarrier.await();</span><br><span class="line">    System.out.println(<span class="string">"第三轮测试结束"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="park和unpark"><a href="#park和unpark" class="headerlink" title="park和unpark"></a>park和unpark</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 测试park和unpark</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> unsafe</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testPark</span><span class="params">(Unsafe unsafe)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>&#123;</span><br><span class="line">    Thread mainThread = Thread.currentThread();</span><br><span class="line">    ExecutorService executor = Executors.newSingleThreadExecutor();</span><br><span class="line">    Future&lt;Thread&gt; threadFuture = executor.submit(() -&gt; &#123;</span><br><span class="line">        System.out.println(<span class="string">"5s后恢复主线程"</span> + mainThread);</span><br><span class="line">        Thread.sleep(<span class="number">5000</span>);</span><br><span class="line">        unsafe.unpark(mainThread);</span><br><span class="line">        <span class="keyword">return</span> Thread.currentThread();</span><br><span class="line">    &#125;);</span><br><span class="line">    System.out.println(<span class="string">"挂起主线程:"</span> + mainThread);</span><br><span class="line">    unsafe.park(<span class="keyword">false</span>, <span class="number">0L</span>);</span><br><span class="line">    System.out.println(<span class="string">"主线程被恢复"</span> + mainThread);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="原子更新数据"><a href="#原子更新数据" class="headerlink" title="原子更新数据"></a>原子更新数据</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 原子的增加一个值和设置一个值</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> unsafe</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> NoSuchFieldException</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testAtomicUpdate</span><span class="params">(Unsafe unsafe)</span> <span class="keyword">throws</span> NoSuchFieldException </span>&#123;</span><br><span class="line">    UnsafeStudy unsafeStudy = <span class="keyword">new</span> UnsafeStudy();</span><br><span class="line">    <span class="keyword">long</span> offset = unsafe.objectFieldOffset(UnsafeStudy.class.getDeclaredField(<span class="string">"b"</span>));</span><br><span class="line">    System.out.println(unsafe.getAndAddInt(unsafeStudy, offset, <span class="number">3</span>));</span><br><span class="line">    System.out.println(unsafe.getAndSetInt(unsafeStudy, offset, <span class="number">1</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>以上是Unsafe类api的使用演示,该类是许多多线程类的底层类.所以了解该类,对于学习多线程有很大收益.</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/多线程/">多线程</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/多线程/">多线程</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	<div class="share-jiathis">
+	  
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_googleplus"></a>
+	<a class="jiathis_button_douban"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+    var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",
+    
+  </script> 
+<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
+" charset="utf-8"></script>      
+
+	 </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2018/09/16/CyclicBarrier类/" title="CyclicBarrier类">
+  <strong>上一篇：</strong><br>
+  <span>
+  CyclicBarrier类</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/09/02/AtomicInteger源码分析/" title="AtomicInteger源码分析">
+ <strong>下一篇：</strong><br> 
+ <span>AtomicInteger源码分析
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#功能学习"><span class="toc-number">2.</span> <span class="toc-text">功能学习</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建Unsafe类的对象"><span class="toc-number">2.1.</span> <span class="toc-text">创建Unsafe类的对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#操作实例变量的值"><span class="toc-number">2.2.</span> <span class="toc-text">操作实例变量的值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#操作类变量"><span class="toc-number">2.3.</span> <span class="toc-text">操作类变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#操作数组"><span class="toc-number">2.4.</span> <span class="toc-text">操作数组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#操作内存"><span class="toc-number">2.5.</span> <span class="toc-text">操作内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#操作内存绝对地址"><span class="toc-number">2.6.</span> <span class="toc-text">操作内存绝对地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建其他类的对象"><span class="toc-number">2.7.</span> <span class="toc-text">创建其他类的对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实现锁机制"><span class="toc-number">2.8.</span> <span class="toc-text">实现锁机制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#checked异常转unchecked异常"><span class="toc-number">2.9.</span> <span class="toc-text">checked异常转unchecked异常</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CAS-Compare-And-Swap"><span class="toc-number">2.10.</span> <span class="toc-text">CAS(Compare And Swap)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#支持volatile原语的get和set"><span class="toc-number">2.11.</span> <span class="toc-text">支持volatile原语的get和set</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#park和unpark"><span class="toc-number">2.12.</span> <span class="toc-text">park和unpark</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#原子更新数据"><span class="toc-number">2.13.</span> <span class="toc-text">原子更新数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结语"><span class="toc-number">3.</span> <span class="toc-text">结语</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/java/" title="java">java<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/多线程/" title="多线程">多线程<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/源码分析/" title="源码分析">源码分析<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>10</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>10</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/java/" title="java">java<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/源码分析/" title="源码分析">源码分析<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>4</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 学习是一种习惯 <br>
+			</p>
+	</section>
+	 
+	<div class="social-font">
+		
+		
+		<a href="https://github.com//sunzhiqiangGithub" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:731265487@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="勤奋的猪">勤奋的猪</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
