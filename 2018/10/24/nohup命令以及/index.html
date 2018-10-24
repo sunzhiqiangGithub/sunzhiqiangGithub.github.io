@@ -4,25 +4,33 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
   
-    <title>java里4种引用类型 | 勤奋的猪</title>
+    <title>nohup命令以及&amp; | 勤奋的猪</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="勤奋的猪">
     
 
     
-    <meta name="description" content="引用类型分类1.强引用2.软引用3.弱引用4.虚引用 引用类型演示1.强引用1Test test = new Test(); 通过new关键字创造的引用为强引用,当GC进行垃圾收集的时候,只有发现没有任何引用指向该对象才可以进行垃圾回收.2.软引用1SoftReference&amp;lt;Test&amp;gt; test1 = new SoftReference&amp;lt;Test&amp;gt;(new Test())">
-<meta name="keywords" content="java">
+    <meta name="description" content="概述在使用linux过程中,我们经常会希望命令在后台运行,实现这个需要我们可以使用ctrl+z组合键或者&amp;amp;符号. 后台运行命令ctrl+z1.正常运行命令2.按ctrl+z组合键,让命令到后台运行3.使用jobs -l查看后台运行的命令4.使用bg %1让后台命令变为运行态,%表示后台命令,1表示后台命令的ID 使用&amp;amp;1.也可以直接使用&amp;amp;符号把命令放到后台运行2.使用job">
+<meta name="keywords" content="linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java里4种引用类型">
-<meta property="og:url" content="http://yoursite.com/2018/08/11/java里4种引用类型/index.html">
+<meta property="og:title" content="nohup命令以及&amp;">
+<meta property="og:url" content="http://yoursite.com/2018/10/24/nohup命令以及/index.html">
 <meta property="og:site_name" content="勤奋的猪">
-<meta property="og:description" content="引用类型分类1.强引用2.软引用3.弱引用4.虚引用 引用类型演示1.强引用1Test test = new Test(); 通过new关键字创造的引用为强引用,当GC进行垃圾收集的时候,只有发现没有任何引用指向该对象才可以进行垃圾回收.2.软引用1SoftReference&amp;lt;Test&amp;gt; test1 = new SoftReference&amp;lt;Test&amp;gt;(new Test())">
+<meta property="og:description" content="概述在使用linux过程中,我们经常会希望命令在后台运行,实现这个需要我们可以使用ctrl+z组合键或者&amp;amp;符号. 后台运行命令ctrl+z1.正常运行命令2.按ctrl+z组合键,让命令到后台运行3.使用jobs -l查看后台运行的命令4.使用bg %1让后台命令变为运行态,%表示后台命令,1表示后台命令的ID 使用&amp;amp;1.也可以直接使用&amp;amp;符号把命令放到后台运行2.使用job">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-08-17T14:48:47.000Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/1.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/2.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/3.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/4.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/5.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/6.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/7.jpg">
+<meta property="og:updated_time" content="2018-10-24T15:33:24.606Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java里4种引用类型">
-<meta name="twitter:description" content="引用类型分类1.强引用2.软引用3.弱引用4.虚引用 引用类型演示1.强引用1Test test = new Test(); 通过new关键字创造的引用为强引用,当GC进行垃圾收集的时候,只有发现没有任何引用指向该对象才可以进行垃圾回收.2.软引用1SoftReference&amp;lt;Test&amp;gt; test1 = new SoftReference&amp;lt;Test&amp;gt;(new Test())">
+<meta name="twitter:title" content="nohup命令以及&amp;">
+<meta name="twitter:description" content="概述在使用linux过程中,我们经常会希望命令在后台运行,实现这个需要我们可以使用ctrl+z组合键或者&amp;amp;符号. 后台运行命令ctrl+z1.正常运行命令2.按ctrl+z组合键,让命令到后台运行3.使用jobs -l查看后台运行的命令4.使用bg %1让后台命令变为运行态,%表示后台命令,1表示后台命令的ID 使用&amp;amp;1.也可以直接使用&amp;amp;符号把命令放到后台运行2.使用job">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/1.jpg">
 
     
     
@@ -69,14 +77,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2018/08/11/java里4种引用类型/" title="java里4种引用类型" itemprop="url">java里4种引用类型</a>
+      <a href="/2018/10/24/nohup命令以及/" title="nohup命令以及&amp;" itemprop="url">nohup命令以及&amp;</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="勤奋的猪" target="_blank" itemprop="author">勤奋的猪</a>
 		
   </p><p class="article-time">
-    <time datetime="2018-08-11T14:22:00.000Z" itemprop="datePublished"> Published 2018-08-11</time>
+    <time datetime="2018-10-24T14:24:00.000Z" itemprop="datePublished"> Published 2018-10-24</time>
     
   </p>
 </header>
@@ -85,16 +93,14 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#引用类型分类"><span class="toc-number">1.</span> <span class="toc-text">引用类型分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#引用类型演示"><span class="toc-number">2.</span> <span class="toc-text">引用类型演示</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#后台运行命令"><span class="toc-number">2.</span> <span class="toc-text">后台运行命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ctrl-z"><span class="toc-number">2.1.</span> <span class="toc-text">ctrl+z</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-amp"><span class="toc-number">2.2.</span> <span class="toc-text">使用&amp;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#nohup"><span class="toc-number">2.3.</span> <span class="toc-text">nohup</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		<h3 id="引用类型分类"><a href="#引用类型分类" class="headerlink" title="引用类型分类"></a>引用类型分类</h3><p>1.强引用<br>2.软引用<br>3.弱引用<br>4.虚引用</p>
-<h3 id="引用类型演示"><a href="#引用类型演示" class="headerlink" title="引用类型演示"></a>引用类型演示</h3><p>1.<strong>强引用</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Test test = <span class="keyword">new</span> Test();</span><br></pre></td></tr></table></figure></p>
-<p>通过new关键字创造的引用为强引用,当GC进行垃圾收集的时候,只有发现没有任何引用指向该对象才可以进行垃圾回收.<br>2.<strong>软引用</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SoftReference&lt;Test&gt; test1 = <span class="keyword">new</span> SoftReference&lt;Test&gt;(<span class="keyword">new</span> Test());</span><br></pre></td></tr></table></figure></p>
-<p>当GC进行垃圾回收时,如果这个时候,JVM内存充足,就不对该对象进行回收,否则进行回收.<br>3.<strong>弱引用</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WeakReference&lt;Test&gt; test2 = <span class="keyword">new</span> WeakReference&lt;Test&gt;(<span class="keyword">new</span> Test());</span><br></pre></td></tr></table></figure></p>
-<p>每次进行GC都会回收弱引用.<br>4.<strong>虚引用</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ReferenceQueue&lt;Test&gt; rf = <span class="keyword">new</span> ReferenceQueue&lt;Test&gt;();</span><br><span class="line">PhantomReference&lt;Test&gt; test3 = <span class="keyword">new</span> PhantomReference&lt;Test&gt;(<span class="keyword">new</span> Test(),rf);</span><br></pre></td></tr></table></figure></p>
-<p>如果一个对象只具有虚引用，那么它就和没有任何引用一样，随时会被jvm当作垃圾进行回收，虚引用主要是用于跟踪一个对象何时被GC回收.</p>
+		<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>在使用linux过程中,我们经常会希望命令在后台运行,实现这个需要我们可以使用ctrl+z组合键或者&amp;符号.</p>
+<h3 id="后台运行命令"><a href="#后台运行命令" class="headerlink" title="后台运行命令"></a>后台运行命令</h3><h4 id="ctrl-z"><a href="#ctrl-z" class="headerlink" title="ctrl+z"></a>ctrl+z</h4><p>1.正常运行命令<br><img src="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/1.jpg" alt="picture1"><br>2.按ctrl+z组合键,让命令到后台运行<br><img src="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/2.jpg" alt="picture2"><br>3.使用jobs -l查看后台运行的命令<br><img src="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/3.jpg" alt="picture3"><br>4.使用bg %1让后台命令变为运行态,%表示后台命令,1表示后台命令的ID<br><img src="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/4.jpg" alt="picture4"></p>
+<h4 id="使用-amp"><a href="#使用-amp" class="headerlink" title="使用&amp;"></a>使用&amp;</h4><p>1.也可以直接使用&amp;符号把命令放到后台运行<br><img src="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/5.jpg" alt="picture5"><br>2.使用jobs -l查看命令的运行状态<br><img src="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/6.jpg" alt="picture6"></p>
+<h4 id="nohup"><a href="#nohup" class="headerlink" title="nohup"></a>nohup</h4><p>上面的方式实现了让命令后台运行,但有个问题是,一旦退出当前的shell,命令就会终止,解决办法是使用nohup这个命令.<br><img src="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/7.jpg" alt="picture7"></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -102,13 +108,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/java/">java</a>
+  <a class="article-category-link" href="/categories/linux/">linux</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/java/">java</a>
+  <span></span> <a href="/tags/linux/">linux</a>
   </div>
 
 </div>
@@ -152,19 +158,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev">
- <a href="/2018/08/12/使用builder模式构建javabean/" title="使用builder模式构建javabean">
-  <strong>上一篇：</strong><br>
-  <span>
-  使用builder模式构建javabean</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2018/08/11/适配器模式/" title="适配器模式">
+<a href="/2018/10/24/责任链模式/" title="责任链模式">
  <strong>下一篇：</strong><br> 
- <span>适配器模式
+ <span>责任链模式
 </span>
 </a>
 </div>
@@ -181,7 +179,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#引用类型分类"><span class="toc-number">1.</span> <span class="toc-text">引用类型分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#引用类型演示"><span class="toc-number">2.</span> <span class="toc-text">引用类型演示</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#后台运行命令"><span class="toc-number">2.</span> <span class="toc-text">后台运行命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ctrl-z"><span class="toc-number">2.1.</span> <span class="toc-text">ctrl+z</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-amp"><span class="toc-number">2.2.</span> <span class="toc-text">使用&amp;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#nohup"><span class="toc-number">2.3.</span> <span class="toc-text">nohup</span></a></li></ol></li></ol>
  
   </div>
 
