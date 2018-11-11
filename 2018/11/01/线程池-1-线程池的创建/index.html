@@ -21,7 +21,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://github.com/sunzhiqiangGithub/pictures/blob/master/juc/threadpool/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%8E%9F%E7%90%86.png?raw=true">
 <meta property="og:image" content="https://github.com/sunzhiqiangGithub/pictures/blob/master/juc/threadpool/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%8E%9F%E7%90%86%E5%9B%BE.png?raw=true">
-<meta property="og:updated_time" content="2018-11-01T07:26:41.493Z">
+<meta property="og:updated_time" content="2018-11-11T06:30:13.471Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="线程池(1)-线程池的创建">
 <meta name="twitter:description" content="前言对于创建和销毁代价比较大的对象，如果创建的比较频繁，一般会用池来缓存对象。但也不是所有的对象都适合缓存，对于创建和销毁代价并不大的对象，还是在使用的时候创建效率高。比较适合池化的对象有数据库连接对象，线程对象等。线程池就是缓存线程的容器。 线程池的创建 使用Executors 123456789101112@Testpublic void createThreadPoolByFactory()">
@@ -106,12 +106,15 @@
 <li>如果核心线程池没有满，任务会提交给核心线程池来执行。</li>
 <li>如果核心线程池满了，任务会提交到任务队列。</li>
 <li>如果任务队列也满了，任务会提交到最大线程池去执行。</li>
-<li>如果最大线程池也满了（线程池达到饱和状态），线程池会对后续的任务执行特定策略。<h4 id="饱和策略"><a href="#饱和策略" class="headerlink" title="饱和策略"></a>饱和策略</h4></li>
+<li>如果最大线程池也满了（线程池达到饱和状态），线程池会对后续的任务执行特定策略。</li>
+</ol>
+<h4 id="饱和策略"><a href="#饱和策略" class="headerlink" title="饱和策略"></a>饱和策略</h4><ol>
 <li>AbortPolicy： 直接拒绝所提交的任务，并抛出RejectedExecutionException异常</li>
 <li>CallerRunsPolicy：只用调用者所在的线程来执行任务；</li>
 <li>DiscardPolicy：不处理直接丢弃掉任务；</li>
-<li>DiscardOldestPolicy：丢弃掉阻塞队列中存放时间最久的任务，执行当前任务<h3 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h3>以上是线程池的创建和基本原理，会在之后的文章里建设线程池的使用以及线程池的源码解析。</li>
+<li>DiscardOldestPolicy：丢弃掉阻塞队列中存放时间最久的任务，执行当前任务</li>
 </ol>
+<h3 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h3><p>以上是线程池的创建和基本原理，会在之后的文章里建设线程池的使用以及线程池的源码解析。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
