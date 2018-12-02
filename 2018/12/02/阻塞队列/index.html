@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="设计模式,">
+  <meta name="keywords" content="多线程,">
 
 
 
@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="模式的定义: 保证一个类仅有一个实例,并提供一个访问它的全局访问点.   代码演示:1.饿汉式1234567891011121314151617/** * 功能描述: 单例模式(饿汉式) * * @author sunzhiqiang * @create 2018-08-05 */public final class Singleton1 &amp;#123;    private final stati">
-<meta name="keywords" content="设计模式">
+<meta name="description" content="定义阻塞队列是一个支持两个附加操作的队列。这两个附加的操作支持阻塞的插入和移除方法。  支持阻塞的插入方法：意思是当队列满时，队列会阻塞插入元素的线程，直到队列不满。 支持阻塞的移除方法：意思是在队列为空时，队列会阻塞插入元素的线程，直到队列不满。  分类java里提供了7个阻塞队列，如下：  ArrayBlockingQueue:一个由数组结构组成的有界阻塞队列。 LinkedBlockingQ">
+<meta name="keywords" content="多线程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="单例模式">
-<meta property="og:url" content="http://sunzhiqiang.com.cn/2018/08/01/单例模式/index.html">
+<meta property="og:title" content="阻塞队列">
+<meta property="og:url" content="http://sunzhiqiang.com.cn/2018/12/02/阻塞队列/index.html">
 <meta property="og:site_name" content="勤奋的猪">
-<meta property="og:description" content="模式的定义: 保证一个类仅有一个实例,并提供一个访问它的全局访问点.   代码演示:1.饿汉式1234567891011121314151617/** * 功能描述: 单例模式(饿汉式) * * @author sunzhiqiang * @create 2018-08-05 */public final class Singleton1 &amp;#123;    private final stati">
+<meta property="og:description" content="定义阻塞队列是一个支持两个附加操作的队列。这两个附加的操作支持阻塞的插入和移除方法。  支持阻塞的插入方法：意思是当队列满时，队列会阻塞插入元素的线程，直到队列不满。 支持阻塞的移除方法：意思是在队列为空时，队列会阻塞插入元素的线程，直到队列不满。  分类java里提供了7个阻塞队列，如下：  ArrayBlockingQueue:一个由数组结构组成的有界阻塞队列。 LinkedBlockingQ">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-11T08:52:49.000Z">
+<meta property="og:updated_time" content="2018-12-02T14:56:38.821Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="单例模式">
-<meta name="twitter:description" content="模式的定义: 保证一个类仅有一个实例,并提供一个访问它的全局访问点.   代码演示:1.饿汉式1234567891011121314151617/** * 功能描述: 单例模式(饿汉式) * * @author sunzhiqiang * @create 2018-08-05 */public final class Singleton1 &amp;#123;    private final stati">
+<meta name="twitter:title" content="阻塞队列">
+<meta name="twitter:description" content="定义阻塞队列是一个支持两个附加操作的队列。这两个附加的操作支持阻塞的插入和移除方法。  支持阻塞的插入方法：意思是当队列满时，队列会阻塞插入元素的线程，直到队列不满。 支持阻塞的移除方法：意思是在队列为空时，队列会阻塞插入元素的线程，直到队列不满。  分类java里提供了7个阻塞队列，如下：  ArrayBlockingQueue:一个由数组结构组成的有界阻塞队列。 LinkedBlockingQ">
 
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://sunzhiqiang.com.cn/2018/08/01/单例模式/">
+  <link rel="canonical" href="http://sunzhiqiang.com.cn/2018/12/02/阻塞队列/">
 
 
 
 
 
-  <title>单例模式 | 勤奋的猪</title>
+  <title>阻塞队列 | 勤奋的猪</title>
   
 
 
@@ -307,7 +307,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://sunzhiqiang.com.cn/2018/08/01/单例模式/">
+    <link itemprop="mainEntityOfPage" href="http://sunzhiqiang.com.cn/2018/12/02/阻塞队列/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="勤奋的猪">
@@ -324,7 +324,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">单例模式</h1>
+          <h1 class="post-title" itemprop="name headline">阻塞队列</h1>
         
 
         <div class="post-meta">
@@ -336,8 +336,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-01T23:22:00+08:00">
-                2018-08-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-02T21:58:00+08:00">
+                2018-12-02
               </time>
             
 
@@ -359,8 +359,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
+                  <a href="/categories/多线程/" itemprop="url" rel="index">
+                    <span itemprop="name">多线程</span>
                   </a>
                 </span>
 
@@ -376,7 +376,7 @@
 
           
           
-             <span id="/2018/08/01/单例模式/" class="leancloud_visitors" data-flag-title="单例模式">
+             <span id="/2018/12/02/阻塞队列/" class="leancloud_visitors" data-flag-title="阻塞队列">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -401,7 +401,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  201
+                  1k
                 </span>
               
 
@@ -417,7 +417,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  3
                 </span>
               
             </div>
@@ -438,13 +438,32 @@
       
 
       
-        <h3 id="模式的定义"><a href="#模式的定义" class="headerlink" title="模式的定义:"></a>模式的定义:</h3><blockquote>
-<p><strong><em>保证一个类仅有一个实例,并提供一个访问它的全局访问点.</em></strong></p>
-</blockquote>
-<hr>
-<h3 id="代码演示"><a href="#代码演示" class="headerlink" title="代码演示:"></a>代码演示:</h3><p>1.<strong>饿汉式</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 功能描述: 单例模式(饿汉式)</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sunzhiqiang</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2018-08-05</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton1</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> Singleton1 INSTANCE = <span class="keyword">new</span> Singleton1();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton1 <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>2.<strong>懒汉式</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 功能描述: 单例模式(懒汉式)</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sunzhiqiang</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2018-08-05</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton2</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton2 INSTANCE = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton2</span><span class="params">()</span></span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton2 <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(INSTANCE == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton2.class)&#123;</span><br><span class="line">                <span class="keyword">if</span>(INSTANCE == <span class="keyword">null</span>)&#123;</span><br><span class="line">                    INSTANCE = <span class="keyword">new</span> Singleton2();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>3.<strong>静态内部类</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 功能描述: 单例模式(静态内部类)</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sunzhiqiang</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2018-08-05</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton3</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton3</span><span class="params">()</span></span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton3 <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Singleton3Holder.INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton3Holder</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton3 INSTANCE = <span class="keyword">new</span> Singleton3();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>阻塞队列是一个支持两个附加操作的队列。这两个附加的操作支持阻塞的插入和移除方法。</p>
+<ol>
+<li>支持阻塞的插入方法：意思是当队列满时，队列会阻塞插入元素的线程，直到队列不满。</li>
+<li>支持阻塞的移除方法：意思是在队列为空时，队列会阻塞插入元素的线程，直到队列不满。</li>
+</ol>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><p>java里提供了7个阻塞队列，如下：</p>
+<ul>
+<li>ArrayBlockingQueue:一个由数组结构组成的有界阻塞队列。</li>
+<li>LinkedBlockingQueue:一个由链表结构组成的有界阻塞队列。</li>
+<li>PriorityBlockingQueue:一个支持优先级排序的无界阻塞队列。</li>
+<li>DelayQueue:一个使用优先级队列实现的无界阻塞队列。</li>
+<li>SynchronousQueue:一个不存储元素的阻塞队列。</li>
+<li>LinkedTransferQueue:一个由链表结构组成的无界阻塞队列。</li>
+<li>LinkedBlockingDeque:一个由链表结构组成的双向阻塞队列。</li>
+</ul>
+<h3 id="具体介绍"><a href="#具体介绍" class="headerlink" title="具体介绍"></a>具体介绍</h3><h4 id="ArrayBlockingQueue"><a href="#ArrayBlockingQueue" class="headerlink" title="ArrayBlockingQueue"></a><strong>ArrayBlockingQueue</strong></h4><p>ArrayBlockingQueue是一个用数组实现的有界阻塞队列。此队列按照先进先出（FIFO）的原则对元素进行排序。  </p>
+<h4 id="LinkedBlockingQueue"><a href="#LinkedBlockingQueue" class="headerlink" title="LinkedBlockingQueue"></a><strong>LinkedBlockingQueue</strong></h4><p>LinkedBlockingQueue是一个用链表实现的有界阻塞队列。此队列的默认和最大长度为Integer.MAX_VALUE。此队列按照先进先出的原则对元素进行排序。  </p>
+<h4 id="PriorityBlockingQueue"><a href="#PriorityBlockingQueue" class="headerlink" title="PriorityBlockingQueue"></a><strong>PriorityBlockingQueue</strong></h4><p>PriorityBlockingQueue是一个支持优先级的无界阻塞队列。默认情况下元素采取自然顺序升序排列。也可以自定义类实现compareTo()方法来指定元素排序规则，或者初始化PriorityBlockingQueue时，指定构造参数Comparator来对元素进行排序。需要注意的是不能保证同优先级元素的顺序。  </p>
+<h4 id="DelayQueue"><a href="#DelayQueue" class="headerlink" title="DelayQueue"></a><strong>DelayQueue</strong></h4><p>DelayQueue是一个支持延时获取元素的无界阻塞队列。队列使用PriorityQueue来实现。队列中的元素必须实现Delayed接口，在创建元素时可以指定多久才能从队列中获取当前元素。只有在延迟期满时才能从队列中提取元素。<br>DelayQueue非常有用，可以将DelayQueue运用在以下应用场景。  </p>
+<ul>
+<li>缓存系统的设计：可以用DelayQueue保存缓存元素的有效期，使用一个线程循环查询DelayQueue,一旦能从DelayQueue中获取元素时，表示缓存有效期到了。</li>
+<li>定时任务调度：使用DelayQueue保存当天将会执行的任务和执行时间，一旦从DelayQueue中获取到任务就开始执行，比如TimerQueue就是使用DelayQueue实现的。</li>
+</ul>
+<h4 id="SynchronousQueue"><a href="#SynchronousQueue" class="headerlink" title="SynchronousQueue"></a><strong>SynchronousQueue</strong></h4><p>SynchronousQueue是一个不存储元素的阻塞队列。每一个put操作必须等待一个take操作，否则不能继续添加元素。<br>SynchronousQueue可以看成是一个传球手，负责把生产者线程处理的数据直接传递给消费者线程。队列本身并不存储任何元素，非常适合传递性场景。SynchronousQueue的吞吐量高于LinkedBlockingQueue和ArrayBlockingQueue。</p>
+<h4 id="LinkedTransferQueue"><a href="#LinkedTransferQueue" class="headerlink" title="LinkedTransferQueue"></a><strong>LinkedTransferQueue</strong></h4><p>LinkedTransferQueue是一个由链表结构组成的无界阻塞TransferQueue队列。相对于其他阻塞队列，LinkedTransferQueue多了tryTransfer和transfer方法。</p>
+<h4 id="LinkedBlockingDeque"><a href="#LinkedBlockingDeque" class="headerlink" title="LinkedBlockingDeque"></a><strong>LinkedBlockingDeque</strong></h4><p>LinkedBlockingDeque是一个由链表结构组成的双向阻塞队列。所谓双向队列指的是可以从队列的两端插入和移出元素。双向队列因为多了一个操作队列的入口，在多线程同时入队时，也就减少了一半的竞争。相比其他的阻塞队列，LinkedBlockingDeque多了addFirst、addLast、OfferFirst、offerLast、peekFirst和peekLast等方法，以First单词结尾的方法，表示插入、获取（peek）或移除双端队列的第一个元素。以Last单词结尾的方法，表示插入、获取或移除双端队列的最后一个元素。另外，插入方法add等同于addLast,移除方法remove等效于removeFirst。但是take方法却等同于takeFirst,不知道是不是JDK的bug,使用时还是用带有First和Last后缀的方法更清楚。<br>在初始化LinkedBlockingDeque时可以设置容量防止其过度膨胀。另外，双向阻塞队列可以运用在“工作窃取”模式中。</p>
 
       
     </div>
@@ -462,7 +481,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
+            <a href="/tags/多线程/" rel="tag"># 多线程</a>
           
         </div>
       
@@ -475,8 +494,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/30/设计模式总览/" rel="next" title="设计模式总览">
-                <i class="fa fa-chevron-left"></i> 设计模式总览
+              <a href="/2018/11/12/中介者模式/" rel="next" title="中介者模式">
+                <i class="fa fa-chevron-left"></i> 中介者模式
               </a>
             
           </div>
@@ -484,10 +503,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/09/模板方法模式/" rel="prev" title="模板方法模式">
-                模板方法模式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -697,7 +712,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#模式的定义"><span class="nav-number">1.</span> <span class="nav-text">模式的定义:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码演示"><span class="nav-number">2.</span> <span class="nav-text">代码演示:</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分类"><span class="nav-number">2.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体介绍"><span class="nav-number">3.</span> <span class="nav-text">具体介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ArrayBlockingQueue"><span class="nav-number">3.1.</span> <span class="nav-text">ArrayBlockingQueue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LinkedBlockingQueue"><span class="nav-number">3.2.</span> <span class="nav-text">LinkedBlockingQueue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PriorityBlockingQueue"><span class="nav-number">3.3.</span> <span class="nav-text">PriorityBlockingQueue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DelayQueue"><span class="nav-number">3.4.</span> <span class="nav-text">DelayQueue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SynchronousQueue"><span class="nav-number">3.5.</span> <span class="nav-text">SynchronousQueue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LinkedTransferQueue"><span class="nav-number">3.6.</span> <span class="nav-text">LinkedTransferQueue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LinkedBlockingDeque"><span class="nav-number">3.7.</span> <span class="nav-text">LinkedBlockingDeque</span></a></li></ol></li></ol></div>
             
 
           </div>
