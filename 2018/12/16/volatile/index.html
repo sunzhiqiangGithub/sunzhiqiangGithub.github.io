@@ -90,7 +90,7 @@
 <meta property="og:description" content="定义java语言规范第3版中对volatile的定义如下：java编程语言允许线程访问共享变量，为了确保共享变量能被准确和一致地更新，线程应该确保通过排它锁单独获得这个变量。Java语言提供了volatile,在某些情况下比锁要更加方便。如果一个字段被声明成volatile,Java线程内存模型确保所有线程看到这个变量的值是一致的。 解析保证线程安全的3个特性：    原子性 可见性 有序性  根">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/jmm/jmm.jpg">
-<meta property="og:updated_time" content="2018-12-16T15:28:21.706Z">
+<meta property="og:updated_time" content="2018-12-16T15:39:26.834Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="volatile">
 <meta name="twitter:description" content="定义java语言规范第3版中对volatile的定义如下：java编程语言允许线程访问共享变量，为了确保共享变量能被准确和一致地更新，线程应该确保通过排它锁单独获得这个变量。Java语言提供了volatile,在某些情况下比锁要更加方便。如果一个字段被声明成volatile,Java线程内存模型确保所有线程看到这个变量的值是一致的。 解析保证线程安全的3个特性：    原子性 可见性 有序性  根">
@@ -452,7 +452,7 @@
 <li>将当前处理器缓存行的数据写回到系统内存。</li>
 <li>这个写回内存的操作会使在其他CPU里缓存了该内存地址的数据无效。</li>
 </ol>
-<p>其实要保证内存的可见性，还需要另一个保证，就是一个线程对volatile变量的写要先发生于另一个变量都该volatile变量的读取。这是<strong>happens-before</strong>的其中一条规则。通过这个规则保证了对volatile变量的修改对于其后所有读取该变量的线程都可见。</p>
+<p>其实要保证内存的可见性，还需要另一个保证，就是一个线程对volatile变量的写要先发生于另一个变量对该volatile变量的读取。这是<strong>happens-before</strong>的其中一条规则。通过这个规则保证了对volatile变量的修改对于其后所有读取该变量的线程都可见。</p>
 
       
     </div>
