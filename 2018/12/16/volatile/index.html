@@ -90,7 +90,7 @@
 <meta property="og:description" content="定义java语言规范第3版中对volatile的定义如下：java编程语言允许线程访问共享变量，为了确保共享变量能被准确和一致地更新，线程应该确保通过排它锁单独获得这个变量。Java语言提供了volatile,在某些情况下比锁要更加方便。如果一个字段被声明成volatile,Java线程内存模型确保所有线程看到这个变量的值是一致的。 解析保证线程安全的3个特性：    原子性 可见性 有序性  根">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/jmm/jmm.jpg">
-<meta property="og:updated_time" content="2018-12-16T15:39:26.834Z">
+<meta property="og:updated_time" content="2018-12-23T14:03:55.677Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="volatile">
 <meta name="twitter:description" content="定义java语言规范第3版中对volatile的定义如下：java编程语言允许线程访问共享变量，为了确保共享变量能被准确和一致地更新，线程应该确保通过排它锁单独获得这个变量。Java语言提供了volatile,在某些情况下比锁要更加方便。如果一个字段被声明成volatile,Java线程内存模型确保所有线程看到这个变量的值是一致的。 解析保证线程安全的3个特性：    原子性 可见性 有序性  根">
@@ -403,7 +403,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  698
+                  710
                 </span>
               
 
@@ -453,6 +453,7 @@
 <li>这个写回内存的操作会使在其他CPU里缓存了该内存地址的数据无效。</li>
 </ol>
 <p>其实要保证内存的可见性，还需要另一个保证，就是一个线程对volatile变量的写要先发生于另一个变量对该volatile变量的读取。这是<strong>happens-before</strong>的其中一条规则。通过这个规则保证了对volatile变量的修改对于其后所有读取该变量的线程都可见。</p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p>《Java并发编程的艺术》</p>
 
       
     </div>
@@ -492,6 +493,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/23/happens-before/" rel="prev" title="happens-before">
+                happens-before <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -601,7 +606,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -701,7 +706,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解析"><span class="nav-number">2.</span> <span class="nav-text">解析</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解析"><span class="nav-number">2.</span> <span class="nav-text">解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文献"><span class="nav-number">3.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
             
 
           </div>
@@ -742,7 +747,7 @@ var jiathis_config={
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">33.6k</span>
+    <span title="Site words total count">34.7k</span>
   
 </div>
 
