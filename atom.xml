@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://sunzhiqiang.com.cn/"/>
-  <updated>2018-12-23T13:42:43.833Z</updated>
+  <updated>2019-01-05T15:36:34.043Z</updated>
   <id>http://sunzhiqiang.com.cn/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>分布式锁</title>
+    <link href="http://sunzhiqiang.com.cn/2019/01/05/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/"/>
+    <id>http://sunzhiqiang.com.cn/2019/01/05/分布式锁/</id>
+    <published>2019-01-05T11:20:00.000Z</published>
+    <updated>2019-01-05T15:36:34.043Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="分布式" scheme="http://sunzhiqiang.com.cn/categories/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+    
+      <category term="分布式" scheme="http://sunzhiqiang.com.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>happens-before</title>
@@ -512,35 +538,6 @@
     
     
       <category term="多线程" scheme="http://sunzhiqiang.com.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>AtomicInteger源码分析</title>
-    <link href="http://sunzhiqiang.com.cn/2018/09/02/AtomicInteger%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
-    <id>http://sunzhiqiang.com.cn/2018/09/02/AtomicInteger源码分析/</id>
-    <published>2018-09-02T09:10:00.000Z</published>
-    <updated>2018-09-16T07:06:25.000Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h3&gt;&lt;p&gt;AtomicInteger是jdk1.5之后新增的一个可以原子更新的Integer类.常用来做多线程环境下的计数器.&lt;/p&gt;
-&lt;h3
-        
-      
-    
-    </summary>
-    
-      <category term="源码分析" scheme="http://sunzhiqiang.com.cn/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
-    
-    
-      <category term="多线程" scheme="http://sunzhiqiang.com.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-      <category term="源码分析" scheme="http://sunzhiqiang.com.cn/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
