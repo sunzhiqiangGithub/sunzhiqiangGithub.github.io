@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="linux,">
+  <meta name="keywords" content="多线程,">
 
 
 
@@ -81,26 +81,21 @@
 
 
 
-<meta name="description" content="概述在使用linux过程中,我们经常会希望命令在后台运行,实现这个需要我们可以使用ctrl+z组合键或者&amp;amp;符号. 后台运行命令ctrl+z1.正常运行命令2.按ctrl+z组合键,让命令到后台运行3.使用jobs -l查看后台运行的命令4.使用bg %1让后台命令变为运行态,%表示后台命令,1表示后台命令的ID 使用&amp;amp;1.也可以直接使用&amp;amp;符号把命令放到后台运行2.使用job">
-<meta name="keywords" content="linux">
+<meta name="description" content="定义Fork/Join框架Fork/Join框架是Java7提供的一个用于平行执行任务的框架，是一个把大任务割成若干个小任务，最终汇总每个小任务结果后得到大任务结果的框架。    Fork就是把一个大任务切分为若干子任务平行的执行 Join就是合并这些子任务的执行结果，最后得到这个大任务的结果  如图：   工作窃取算法工作窃取（work-stealing）算法是指某个线程从其他队列里窃取任务来执">
+<meta name="keywords" content="多线程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="nohup命令以及&amp;">
-<meta property="og:url" content="http://sunzhiqiang.com.cn/2018/10/24/nohup命令以及/index.html">
+<meta property="og:title" content="Fork&#x2F;Join框架">
+<meta property="og:url" content="http://sunzhiqiang.com.cn/2019/01/06/Fork-Join框架/index.html">
 <meta property="og:site_name" content="勤奋的猪">
-<meta property="og:description" content="概述在使用linux过程中,我们经常会希望命令在后台运行,实现这个需要我们可以使用ctrl+z组合键或者&amp;amp;符号. 后台运行命令ctrl+z1.正常运行命令2.按ctrl+z组合键,让命令到后台运行3.使用jobs -l查看后台运行的命令4.使用bg %1让后台命令变为运行态,%表示后台命令,1表示后台命令的ID 使用&amp;amp;1.也可以直接使用&amp;amp;符号把命令放到后台运行2.使用job">
+<meta property="og:description" content="定义Fork/Join框架Fork/Join框架是Java7提供的一个用于平行执行任务的框架，是一个把大任务割成若干个小任务，最终汇总每个小任务结果后得到大任务结果的框架。    Fork就是把一个大任务切分为若干子任务平行的执行 Join就是合并这些子任务的执行结果，最后得到这个大任务的结果  如图：   工作窃取算法工作窃取（work-stealing）算法是指某个线程从其他队列里窃取任务来执">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/1.jpg">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/2.jpg">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/3.jpg">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/4.jpg">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/5.jpg">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/6.jpg">
-<meta property="og:image" content="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/7.jpg">
-<meta property="og:updated_time" content="2018-10-24T15:33:24.606Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/juc/fork_join/Fork-Join.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/juc/fork_join/work-stealing.png">
+<meta property="og:updated_time" content="2019-01-06T14:56:29.253Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="nohup命令以及&amp;">
-<meta name="twitter:description" content="概述在使用linux过程中,我们经常会希望命令在后台运行,实现这个需要我们可以使用ctrl+z组合键或者&amp;amp;符号. 后台运行命令ctrl+z1.正常运行命令2.按ctrl+z组合键,让命令到后台运行3.使用jobs -l查看后台运行的命令4.使用bg %1让后台命令变为运行态,%表示后台命令,1表示后台命令的ID 使用&amp;amp;1.也可以直接使用&amp;amp;符号把命令放到后台运行2.使用job">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/1.jpg">
+<meta name="twitter:title" content="Fork&#x2F;Join框架">
+<meta name="twitter:description" content="定义Fork/Join框架Fork/Join框架是Java7提供的一个用于平行执行任务的框架，是一个把大任务割成若干个小任务，最终汇总每个小任务结果后得到大任务结果的框架。    Fork就是把一个大任务切分为若干子任务平行的执行 Join就是合并这些子任务的执行结果，最后得到这个大任务的结果  如图：   工作窃取算法工作窃取（work-stealing）算法是指某个线程从其他队列里窃取任务来执">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/juc/fork_join/Fork-Join.jpg">
 
 
 
@@ -130,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://sunzhiqiang.com.cn/2018/10/24/nohup命令以及/">
+  <link rel="canonical" href="http://sunzhiqiang.com.cn/2019/01/06/Fork-Join框架/">
 
 
 
 
 
-  <title>nohup命令以及& | 勤奋的猪</title>
+  <title>Fork/Join框架 | 勤奋的猪</title>
   
 
 
@@ -315,7 +310,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://sunzhiqiang.com.cn/2018/10/24/nohup命令以及/">
+    <link itemprop="mainEntityOfPage" href="http://sunzhiqiang.com.cn/2019/01/06/Fork-Join框架/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="勤奋的猪">
@@ -332,7 +327,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">nohup命令以及&</h1>
+          <h1 class="post-title" itemprop="name headline">Fork/Join框架</h1>
         
 
         <div class="post-meta">
@@ -344,8 +339,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-24T22:24:00+08:00">
-                2018-10-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-06T15:54:00+08:00">
+                2019-01-06
               </time>
             
 
@@ -367,8 +362,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/多线程/" itemprop="url" rel="index">
+                    <span itemprop="name">多线程</span>
                   </a>
                 </span>
 
@@ -384,7 +379,7 @@
 
           
           
-             <span id="/2018/10/24/nohup命令以及/" class="leancloud_visitors" data-flag-title="nohup命令以及&">
+             <span id="/2019/01/06/Fork-Join框架/" class="leancloud_visitors" data-flag-title="Fork/Join框架">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -409,7 +404,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  201
+                  1.4k
                 </span>
               
 
@@ -425,7 +420,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  5
                 </span>
               
             </div>
@@ -446,10 +441,31 @@
       
 
       
-        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>在使用linux过程中,我们经常会希望命令在后台运行,实现这个需要我们可以使用ctrl+z组合键或者&amp;符号.</p>
-<h3 id="后台运行命令"><a href="#后台运行命令" class="headerlink" title="后台运行命令"></a>后台运行命令</h3><h4 id="ctrl-z"><a href="#ctrl-z" class="headerlink" title="ctrl+z"></a>ctrl+z</h4><p>1.正常运行命令<br><img src="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/1.jpg" alt="picture1"><br>2.按ctrl+z组合键,让命令到后台运行<br><img src="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/2.jpg" alt="picture2"><br>3.使用jobs -l查看后台运行的命令<br><img src="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/3.jpg" alt="picture3"><br>4.使用bg %1让后台命令变为运行态,%表示后台命令,1表示后台命令的ID<br><img src="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/4.jpg" alt="picture4"></p>
-<h4 id="使用-amp"><a href="#使用-amp" class="headerlink" title="使用&amp;"></a>使用&amp;</h4><p>1.也可以直接使用&amp;符号把命令放到后台运行<br><img src="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/5.jpg" alt="picture5"><br>2.使用jobs -l查看命令的运行状态<br><img src="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/6.jpg" alt="picture6"></p>
-<h4 id="nohup"><a href="#nohup" class="headerlink" title="nohup"></a>nohup</h4><p>上面的方式实现了让命令后台运行,但有个问题是,一旦退出当前的shell,命令就会终止,解决办法是使用nohup这个命令.<br><img src="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/nohup/7.jpg" alt="picture7"></p>
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><h4 id="Fork-Join框架"><a href="#Fork-Join框架" class="headerlink" title="Fork/Join框架"></a>Fork/Join框架</h4><p>Fork/Join框架是Java7提供的一个用于平行执行任务的框架，是一个把大任务割成若干个小任务，最终汇总每个小任务结果后得到大任务结果的框架。  </p>
+<ul>
+<li>Fork就是把一个大任务切分为若干子任务平行的执行</li>
+<li>Join就是合并这些子任务的执行结果，最后得到这个大任务的结果</li>
+</ul>
+<p>如图：<br><img src="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/juc/fork_join/Fork-Join.jpg" alt="Fork/Join">  </p>
+<h4 id="工作窃取算法"><a href="#工作窃取算法" class="headerlink" title="工作窃取算法"></a>工作窃取算法</h4><p>工作窃取（work-stealing）算法是指某个线程从其他队列里窃取任务来执行。那么，为什么需要使用工作窃取算法呢？假如我们需要做一个比较大的任务，可以把这个任务分割为若干互不依赖的子任务，为了减少线程间的竞争，把这些子任务分别放到不同的队列里，并为每个队列创建一个单独的线程来执行队列里的任务，线程和队列一一对应。比如A线程负责处理A队列里的任务。但是，有的线程会先把自己队列里的任务干完，而其他线程对应的队列里还有任务等待处理。干完活的线程与其等着，不如去帮其他线程干活，于是它就去其他线程的队列里窃取一个任务来执行。而在这时它们会访问同一个队列，所以为了减少窃取任务线程和被窃取任务线程之间的竞争，通常会使用双端队列，被窃取任务线程永远从双端队列的头部拿任务执行，而窃取任务的线程永远从双端队列的尾部拿任务执行。<br>如图：<br><img src="https://raw.githubusercontent.com/sunzhiqiangGithub/pictures/master/juc/fork_join/work-stealing.png" alt="work-stealing">  </p>
+<ul>
+<li>工作窃取算法的优点：充分利用线程进行并行计算，减少了线程间的竞争。</li>
+<li>工作窃取算法的缺点：在某些情况下还是存在竞争，比如双端队列里只有一个任务时。并且该算法会消耗了更多的系统资源，比如创建多个线程和多个双端队列。</li>
+</ul>
+<h3 id="Fork-Join框架的设计"><a href="#Fork-Join框架的设计" class="headerlink" title="Fork/Join框架的设计"></a>Fork/Join框架的设计</h3><ol>
+<li>分割任务。首先我们需要有一个fork类来把大任务分割成子任务，有可能子任务还是很大，所以还需要不停地分割，直到分割出的子任务足够小。</li>
+<li>执行任务并合并结果。分割的子任务分别放在双端队列里，然后几个启动线程分别从双端队列里获取任务执行。子任务执行完的结果都统一放在一个队列里，启动一个线程从队列里拿数据，然后合并这些数据。</li>
+</ol>
+<p>Fork/Join使用两个类来完成以上两件事情。<br>1.<strong>ForkJoinTask</strong>：我们要使用ForkJoin框架，必须首先创建一个ForkJoin任务。它提供在任务中执行fork()和join()操作的机制。通常情况下，我们不需要直接继承ForkJoinTask类，只需要继承它的子类，Fork/Join框架提供了以下两个子类。</p>
+<ul>
+<li>RecursiveAction：用于没有返回结果的任务。</li>
+<li>RecursiveTask：用于有返回结果的任务。</li>
+</ul>
+<p>2.<strong>ForkJoinPool</strong>：ForkJoinTask需要通过ForkJoinPool来执行。<br>任务分割出的子任务会添加到当前工作线程所维护的双端队列中，进入队列的头部。当一个工作线程的队列里暂时没有任务时，它会随机从其他工作线程的队列的尾部获得一个任务。</p>
+<h3 id="Fork-Join框架的使用"><a href="#Fork-Join框架的使用" class="headerlink" title="Fork/Join框架的使用"></a>Fork/Join框架的使用</h3><p>下面是使用Fork/Join框架来实现归并排序的例子：<br>ForkJoinTask的子类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.com.sunzhiqiang.java.fork_join;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.RecursiveTask;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 功能描述: 基于fork-join框架的归并排序</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sunzhiqiang</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2019-01-06</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">public class MergeSortTask extends RecursiveTask&lt;int[]&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> THRESHOLD = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] waitingSortArray;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MergeSortTask</span><span class="params">(<span class="keyword">int</span>[] waitingSortArray)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.waitingSortArray = waitingSortArray;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">int</span>[] compute() &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (waitingSortArray.length &lt; THRESHOLD) &#123;</span><br><span class="line">            <span class="keyword">return</span> waitingSortArray;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> middle = waitingSortArray.length / <span class="number">2</span>;</span><br><span class="line">            MergeSortTask subMergeSortTask1 = <span class="keyword">new</span> MergeSortTask(Arrays.copyOfRange(waitingSortArray, <span class="number">0</span>, middle));</span><br><span class="line">            MergeSortTask subMergeSortTask2 = <span class="keyword">new</span> MergeSortTask(Arrays.copyOfRange(waitingSortArray, middle, waitingSortArray.length));</span><br><span class="line">            subMergeSortTask1.fork();</span><br><span class="line">            subMergeSortTask2.fork();</span><br><span class="line">            <span class="keyword">int</span>[] waitMergeArray1 = subMergeSortTask1.join();</span><br><span class="line">            <span class="keyword">int</span>[] waitMergeArray2 = subMergeSortTask2.join();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> mergeArray(waitMergeArray1, waitMergeArray2);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] mergeArray(<span class="keyword">int</span>[] waitMergeArray1, <span class="keyword">int</span>[] waitMergeArray2) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] resultArray = <span class="keyword">new</span> <span class="keyword">int</span>[waitMergeArray1.length + waitMergeArray2.length];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; waitMergeArray1.length &amp;&amp; j &lt; waitMergeArray2.length) &#123;</span><br><span class="line">            <span class="keyword">if</span> (waitMergeArray1[i] &lt; waitMergeArray2[j]) &#123;</span><br><span class="line">                resultArray[k++] = waitMergeArray1[i++];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                resultArray[k++] = waitMergeArray2[j++];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (i &lt; waitMergeArray1.length) &#123;</span><br><span class="line">            <span class="keyword">while</span> (i &lt; waitMergeArray1.length) &#123;</span><br><span class="line">                resultArray[k++] = waitMergeArray1[i++];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (j &lt; waitMergeArray2.length) &#123;</span><br><span class="line">            <span class="keyword">while</span> (j &lt; waitMergeArray2.length) &#123;</span><br><span class="line">                resultArray[k++] = waitMergeArray2[j++];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> resultArray;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>客户端类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.com.sunzhiqiang.java.fork_join;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ForkJoinPool;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 功能描述: 客户端类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sunzhiqiang</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2019-01-06</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] array = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">6</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">10</span>, <span class="number">40</span>, <span class="number">88</span>, <span class="number">100</span>, <span class="number">2000</span>, <span class="number">13</span>&#125;;</span><br><span class="line"></span><br><span class="line">        ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();</span><br><span class="line">        MergeSortTask mergeSortTask = <span class="keyword">new</span> MergeSortTask(array);</span><br><span class="line">        <span class="keyword">int</span>[] resultArray = forkJoinPool.invoke(mergeSortTask);</span><br><span class="line"></span><br><span class="line">        System.out.println(Arrays.toString(resultArray));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>通过这个例子，我们进一步了解ForkJoinTask,ForkJoinTask与一般任务的主要区别在于它需要实现compute方法，在这个方法里，首先需要判断任务是否足够小，如果足够小就直接执行任务。如果不足够小，就必须分割成两个子任务，每个子任务在调用fork方法时，又会进入compute方法，看看当前子任务是否需要继续分割成子任务，如果不需要继续分割，则执行当前子任务并返回结果。使用join方法会等待子任务执行完并得到其结果。</p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p>《java并发编程的艺术》</p>
 
       
     </div>
@@ -467,7 +483,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/linux/" rel="tag"># linux</a>
+            <a href="/tags/多线程/" rel="tag"># 多线程</a>
           
         </div>
       
@@ -480,8 +496,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/10/24/责任链模式/" rel="next" title="责任链模式">
-                <i class="fa fa-chevron-left"></i> 责任链模式
+              <a href="/2019/01/05/分布式锁/" rel="next" title="分布式锁">
+                <i class="fa fa-chevron-left"></i> 分布式锁
               </a>
             
           </div>
@@ -489,10 +505,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/10/25/ReentrantLock/" rel="prev" title="ReentrantLock">
-                ReentrantLock <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -702,7 +714,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后台运行命令"><span class="nav-number">2.</span> <span class="nav-text">后台运行命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ctrl-z"><span class="nav-number">2.1.</span> <span class="nav-text">ctrl+z</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-amp"><span class="nav-number">2.2.</span> <span class="nav-text">使用&amp;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nohup"><span class="nav-number">2.3.</span> <span class="nav-text">nohup</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Fork-Join框架"><span class="nav-number">1.1.</span> <span class="nav-text">Fork/Join框架</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#工作窃取算法"><span class="nav-number">1.2.</span> <span class="nav-text">工作窃取算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fork-Join框架的设计"><span class="nav-number">2.</span> <span class="nav-text">Fork/Join框架的设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fork-Join框架的使用"><span class="nav-number">3.</span> <span class="nav-text">Fork/Join框架的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文献"><span class="nav-number">4.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
             
 
           </div>
