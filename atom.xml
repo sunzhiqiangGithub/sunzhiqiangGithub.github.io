@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://sunzhiqiang.com.cn/"/>
-  <updated>2019-04-07T15:07:05.690Z</updated>
+  <updated>2019-07-08T14:57:17.317Z</updated>
   <id>http://sunzhiqiang.com.cn/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>mysql架构</title>
+    <link href="http://sunzhiqiang.com.cn/2019/07/08/mysql%E6%9E%B6%E6%9E%84/"/>
+    <id>http://sunzhiqiang.com.cn/2019/07/08/mysql架构/</id>
+    <published>2019-07-08T10:39:00.000Z</published>
+    <updated>2019-07-08T14:57:17.317Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt; 
+        
+      
+    
+    </summary>
+    
+      <category term="mysql" scheme="http://sunzhiqiang.com.cn/categories/mysql/"/>
+    
+    
+      <category term="mysql" scheme="http://sunzhiqiang.com.cn/tags/mysql/"/>
+    
+  </entry>
   
   <entry>
     <title>二分查找</title>
@@ -509,33 +535,6 @@
     
     
       <category term="java" scheme="http://sunzhiqiang.com.cn/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>线程池(2)-线程池的使用</title>
-    <link href="http://sunzhiqiang.com.cn/2018/11/04/%E7%BA%BF%E7%A8%8B%E6%B1%A0-2-%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
-    <id>http://sunzhiqiang.com.cn/2018/11/04/线程池-2-线程池的使用/</id>
-    <published>2018-11-04T12:48:00.000Z</published>
-    <updated>2018-11-04T13:01:03.630Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;在之前的文章中介绍过线程池的创建，下面会介绍一下如何使用线程池。&lt;/p&gt;
-&lt;h3 id=&quot;使用线程池的案例&quot;&gt;&lt;a
-        
-      
-    
-    </summary>
-    
-      <category term="多线程" scheme="http://sunzhiqiang.com.cn/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-    
-      <category term="多线程" scheme="http://sunzhiqiang.com.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
   </entry>
   
