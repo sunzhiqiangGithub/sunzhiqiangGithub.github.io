@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[mysql中的锁]]></title>
+    <url>%2F2019%2F07%2F15%2Fmysql%E4%B8%AD%E7%9A%84%E9%94%81%2F</url>
+    <content type="text"><![CDATA[分类MySQL 里面的锁大致可以分成全局锁、表级锁和行锁三类。 全局锁MySQL 提供了一个加全局读锁的方法，命令是 Flush tables with read lock (FTWRL)。使用这个命令加锁后，DML,DDL都会阻塞。全局锁主要用在数据库备份上。 表级锁MySQL 里面表级别的锁有两种：一种是表锁，一种是元数据锁（meta data lock，MDL)。 表锁表锁的语法是 lock tables … read/write。与 FTWRL 类似，可以用 unlock tables 主动释放锁，也可以在客户端断开的时候自动释放。 MDL锁MDL 不需要显式使用，在访问一个表的时候会被自动加上。MDL的作用是保证读写的正确性。在 MySQL 5.5 版本中引入了 MDL，当对一个表做增删改查操作的时候，加 MDL 读锁；当要对表做结构变更操作的时候，加MDL写锁。 读锁之间不互斥，因此你可以有多个线程同时对一个表增删改查。 读写之间、写写之间互斥，保证变更表结构操作的安全性。 行锁共享锁（S锁）select * from t where id = 1 lock in share mode; 排他锁 select * from t where id = 1 for update; insert … update … delete …]]></content>
+      <categories>
+        <category>mysql</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[mysql架构]]></title>
     <url>%2F2019%2F07%2F08%2Fmysql%E6%9E%B6%E6%9E%84%2F</url>
     <content type="text"><![CDATA[引言 mysql数据库目前广泛应用与各大互联网公司，即使作为一个业务开发工程师，了解，深入了解mysql数据库都是很有必要的。今天这篇文章会简单介绍一下mysql数据库的架构。 架构 如图：mysql分为2部分，server层和存储引擎层。 server层 server层包括连接器、查询缓存、分析器、优化器、执行器等，以及所有的内置函数（如日期、时间、数学和加密函数等），所有跨存储引擎的功能都在这一层实现，比如存储过程、触发器、视图等。 存储引擎层 而存储引擎层负责数据的存储和提取。其架构模式是插件式的，支持InnoDB、MyISAM、Memory等多个存储引擎。 连接器连接器负责跟客户端建立连接、获取权限、维持和管理连接。连接器有以下要点： show processlist可以查看现有的连接 客户端如果太长时间没动静，连接器就会自动将它断开。这个时间是由wait_timeout 控制的，默认值是 8 小时。 查询缓存MySQL 拿到一个查询请求后，会先到查询缓存看看，之前是不是执行过这条语句。之前执行过的语句及其结果可能会以 key-value 对的形式，被直接缓存在内存中，key是查询的语句，value是查询的结果。如果没有查询到的话，就执行后面的流程，执行完后把结果缓存在内存中。查询缓存可以提升查询效率，但只要对相应的表有任何修改，查询缓存就会失效。 分析器分析器主要负责解析sql语句，分析器依次进行词法分析-&gt;语法分析。然后判断sql语句是否合法。如果你的语句不对，就会收到“You have an error in your SQL syntax”的错误提醒。 优化器优化器是在表里面有多个索引的时候，决定使用哪个索引。 执行器执行器负责执行sql语句，首先会判断是否有执行相应操作的权限，如果有权限，执行器会根据表所使用的引擎，调用存储引擎层相应的接口来执行sql语句。 总结以上是mysql架构的简要介绍，文章的内容主要参考极客时间的mysql实战45讲专栏，如果想要更详细的了解和学习相关内容，请订阅专栏去学习。 参考文献 极客时间https://time.geekbang.org/column/article/68319]]></content>

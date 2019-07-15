@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://sunzhiqiang.com.cn/"/>
-  <updated>2019-07-08T14:57:17.317Z</updated>
+  <updated>2019-07-15T15:30:51.866Z</updated>
   <id>http://sunzhiqiang.com.cn/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>mysql中的锁</title>
+    <link href="http://sunzhiqiang.com.cn/2019/07/15/mysql%E4%B8%AD%E7%9A%84%E9%94%81/"/>
+    <id>http://sunzhiqiang.com.cn/2019/07/15/mysql中的锁/</id>
+    <published>2019-07-15T12:45:00.000Z</published>
+    <updated>2019-07-15T15:30:51.866Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;分类&quot;&gt;&lt;a href=&quot;#分类&quot; class=&quot;headerlink&quot; title=&quot;分类&quot;&gt;&lt;/a&gt;分类&lt;/h3&gt;&lt;p&gt;MySQL 里面的锁大致可以分成全局锁、表级锁和行锁三类。&lt;/p&gt;
+&lt;h3 id=&quot;全局锁&quot;&gt;&lt;a href=&quot;#全局锁&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="mysql" scheme="http://sunzhiqiang.com.cn/categories/mysql/"/>
+    
+    
+      <category term="mysql" scheme="http://sunzhiqiang.com.cn/tags/mysql/"/>
+    
+  </entry>
   
   <entry>
     <title>mysql架构</title>
@@ -508,33 +535,6 @@
     
     
       <category term="多线程" scheme="http://sunzhiqiang.com.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>内部类</title>
-    <link href="http://sunzhiqiang.com.cn/2018/11/04/%E5%86%85%E9%83%A8%E7%B1%BB/"/>
-    <id>http://sunzhiqiang.com.cn/2018/11/04/内部类/</id>
-    <published>2018-11-04T14:07:00.000Z</published>
-    <updated>2018-11-11T06:26:22.209Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h3&gt;&lt;p&gt;内部类是java常用语法，但使用方法却常常被用错，下面会以代码的方式，演示内部类的使用。&lt;/p&gt;
-&lt;h3 id=&quot;内部类的分类&quot;&gt;&lt;a
-        
-      
-    
-    </summary>
-    
-      <category term="java" scheme="http://sunzhiqiang.com.cn/categories/java/"/>
-    
-    
-      <category term="java" scheme="http://sunzhiqiang.com.cn/tags/java/"/>
     
   </entry>
   

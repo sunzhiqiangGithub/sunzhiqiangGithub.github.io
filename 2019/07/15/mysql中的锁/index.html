@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="java,">
+  <meta name="keywords" content="mysql,">
 
 
 
@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="概述java为了节省内存,会缓存部分常用数据来避免频繁创造对象. String缓存静态创建和new创建String是java.lang包下的字符串类,底层实现使用享元模式,共享对象.123456789101112@Testpublic void test1()&amp;#123;    String s1 = &quot;aaa&quot;;    String s2 = &quot;aaa&quot;;    String s3 = new">
-<meta name="keywords" content="java">
+<meta name="description" content="分类MySQL 里面的锁大致可以分成全局锁、表级锁和行锁三类。 全局锁MySQL 提供了一个加全局读锁的方法，命令是 Flush tables with read lock (FTWRL)。使用这个命令加锁后，DML,DDL都会阻塞。全局锁主要用在数据库备份上。 表级锁MySQL 里面表级别的锁有两种：一种是表锁，一种是元数据锁（meta data lock，MDL)。 表锁表锁的语法是 lock">
+<meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java特殊对象">
-<meta property="og:url" content="http://sunzhiqiang.com.cn/2018/08/17/Java特殊对象/index.html">
+<meta property="og:title" content="mysql中的锁">
+<meta property="og:url" content="http://sunzhiqiang.com.cn/2019/07/15/mysql中的锁/index.html">
 <meta property="og:site_name" content="勤奋的猪">
-<meta property="og:description" content="概述java为了节省内存,会缓存部分常用数据来避免频繁创造对象. String缓存静态创建和new创建String是java.lang包下的字符串类,底层实现使用享元模式,共享对象.123456789101112@Testpublic void test1()&amp;#123;    String s1 = &quot;aaa&quot;;    String s2 = &quot;aaa&quot;;    String s3 = new">
+<meta property="og:description" content="分类MySQL 里面的锁大致可以分成全局锁、表级锁和行锁三类。 全局锁MySQL 提供了一个加全局读锁的方法，命令是 Flush tables with read lock (FTWRL)。使用这个命令加锁后，DML,DDL都会阻塞。全局锁主要用在数据库备份上。 表级锁MySQL 里面表级别的锁有两种：一种是表锁，一种是元数据锁（meta data lock，MDL)。 表锁表锁的语法是 lock">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-17T15:59:05.000Z">
+<meta property="og:updated_time" content="2019-07-15T15:30:51.866Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java特殊对象">
-<meta name="twitter:description" content="概述java为了节省内存,会缓存部分常用数据来避免频繁创造对象. String缓存静态创建和new创建String是java.lang包下的字符串类,底层实现使用享元模式,共享对象.123456789101112@Testpublic void test1()&amp;#123;    String s1 = &quot;aaa&quot;;    String s2 = &quot;aaa&quot;;    String s3 = new">
+<meta name="twitter:title" content="mysql中的锁">
+<meta name="twitter:description" content="分类MySQL 里面的锁大致可以分成全局锁、表级锁和行锁三类。 全局锁MySQL 提供了一个加全局读锁的方法，命令是 Flush tables with read lock (FTWRL)。使用这个命令加锁后，DML,DDL都会阻塞。全局锁主要用在数据库备份上。 表级锁MySQL 里面表级别的锁有两种：一种是表锁，一种是元数据锁（meta data lock，MDL)。 表锁表锁的语法是 lock">
 
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://sunzhiqiang.com.cn/2018/08/17/Java特殊对象/">
+  <link rel="canonical" href="http://sunzhiqiang.com.cn/2019/07/15/mysql中的锁/">
 
 
 
 
 
-  <title>Java特殊对象 | 勤奋的猪</title>
+  <title>mysql中的锁 | 勤奋的猪</title>
   
 
 
@@ -307,7 +307,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://sunzhiqiang.com.cn/2018/08/17/Java特殊对象/">
+    <link itemprop="mainEntityOfPage" href="http://sunzhiqiang.com.cn/2019/07/15/mysql中的锁/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="勤奋的猪">
@@ -324,7 +324,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Java特殊对象</h1>
+          <h1 class="post-title" itemprop="name headline">mysql中的锁</h1>
         
 
         <div class="post-meta">
@@ -336,8 +336,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-17T23:29:00+08:00">
-                2018-08-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-15T20:45:00+08:00">
+                2019-07-15
               </time>
             
 
@@ -359,8 +359,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
                   </a>
                 </span>
 
@@ -376,7 +376,7 @@
 
           
           
-             <span id="/2018/08/17/Java特殊对象/" class="leancloud_visitors" data-flag-title="Java特殊对象">
+             <span id="/2019/07/15/mysql中的锁/" class="leancloud_visitors" data-flag-title="mysql中的锁">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -401,7 +401,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  529
+                  316
                 </span>
               
 
@@ -417,7 +417,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  1
                 </span>
               
             </div>
@@ -438,14 +438,22 @@
       
 
       
-        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>java为了节省内存,会缓存部分常用数据来避免频繁创造对象.</p>
-<h3 id="String缓存"><a href="#String缓存" class="headerlink" title="String缓存"></a>String缓存</h3><h4 id="静态创建和new创建"><a href="#静态创建和new创建" class="headerlink" title="静态创建和new创建"></a>静态创建和new创建</h4><p>String是java.lang包下的字符串类,底层实现使用享元模式,共享对象.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    String s1 = <span class="string">"aaa"</span>;</span><br><span class="line">    String s2 = <span class="string">"aaa"</span>;</span><br><span class="line">    String s3 = <span class="keyword">new</span> String(<span class="string">"aaa"</span>);</span><br><span class="line">    String s4 = <span class="keyword">new</span> String(<span class="string">"aaa"</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(s1 == s2); <span class="comment">// true</span></span><br><span class="line">    System.out.println(s1 == s3); <span class="comment">// false</span></span><br><span class="line">    System.out.println(s3 == s4); <span class="comment">// false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>要解释上面的结果,这里首先要说明一下的是String的2种创建方式:<br>1.静态创建<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s1 = <span class="string">"aaa"</span>;</span><br></pre></td></tr></table></figure></p>
-<p>2.通过new关键字进行创建<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s3 = <span class="keyword">new</span> String(<span class="string">"aaa"</span>);</span><br></pre></td></tr></table></figure></p>
-<p>当字符串使用静态创建时,会在字符串缓冲区中创建对象,然后把对象的引用返回.当下次通过静态创建方式创建相同字符串是,会直接返回字符串缓存区中对象的引用,这正是享元模式的应用.<br>当字符串对象通过new关键字进行创建时,会在堆空间分配内存.所以每次都会使用不同的内存.</p>
-<h4 id="intern方法"><a href="#intern方法" class="headerlink" title="intern方法"></a>intern方法</h4><p>String类的intern方法可以把通过new创建的对象复制一份到字符串常量池.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    String s1 = <span class="string">"aaa"</span>;</span><br><span class="line">    String s2 = <span class="keyword">new</span> String(<span class="string">"aaa"</span>);</span><br><span class="line">    String s3 = s2.intern();</span><br><span class="line"></span><br><span class="line">    System.out.println(s1 == s2); <span class="comment">// false</span></span><br><span class="line">    System.out.println(s1 == s3); <span class="comment">// true</span></span><br><span class="line">    System.out.println(s2 == s3); <span class="comment">// false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="Integer缓存"><a href="#Integer缓存" class="headerlink" title="Integer缓存"></a>Integer缓存</h3><p>Integer类是基本数据类型int的包装类,因为比较常用,Java对-128到127的数据会缓存起来,重复利用.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    Integer a = <span class="number">1</span>;</span><br><span class="line">    Integer b = <span class="number">1</span>;</span><br><span class="line">    Integer c = <span class="number">128</span>;</span><br><span class="line">    Integer d = <span class="number">128</span>;</span><br><span class="line"></span><br><span class="line">    Integer e = <span class="keyword">new</span> Integer(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    Integer f = -<span class="number">1</span>;</span><br><span class="line">    Integer g = -<span class="number">1</span>;</span><br><span class="line">    Integer h = -<span class="number">128</span>;</span><br><span class="line">    Integer i = -<span class="number">128</span>;</span><br><span class="line"></span><br><span class="line">    Integer k = Integer.valueOf(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(a == b); <span class="comment">// true</span></span><br><span class="line">    System.out.println(c == d); <span class="comment">// false</span></span><br><span class="line">    System.out.println(a == e); <span class="comment">// false</span></span><br><span class="line">    System.out.println(f == g); <span class="comment">// true</span></span><br><span class="line">    System.out.println(h == i); <span class="comment">// true</span></span><br><span class="line">    System.out.println(a == k); <span class="comment">// true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>当使用Integer a = 1的方式创建Integer对象时,实际上是在调用Integer.valueOf(int)方法,该方法会检查参数值得大小,当参数落在-128到127的范围,就返回JVM事先创建好的对象.否则重新创建对象.<br>使用new关键字每次都会重新创建对象.</p>
+        <h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><p>MySQL 里面的锁大致可以分成全局锁、表级锁和行锁三类。</p>
+<h3 id="全局锁"><a href="#全局锁" class="headerlink" title="全局锁"></a>全局锁</h3><p>MySQL 提供了一个加全局读锁的方法，命令是 Flush tables with read lock (FTWRL)。使用这个命令加锁后，DML,DDL都会阻塞。全局锁主要用在数据库备份上。</p>
+<h3 id="表级锁"><a href="#表级锁" class="headerlink" title="表级锁"></a>表级锁</h3><p>MySQL 里面表级别的锁有两种：一种是表锁，一种是元数据锁（meta data lock，MDL)。</p>
+<h4 id="表锁"><a href="#表锁" class="headerlink" title="表锁"></a>表锁</h4><p>表锁的语法是 lock tables … read/write。与 FTWRL 类似，可以用 unlock tables 主动释放锁，也可以在客户端断开的时候自动释放。</p>
+<h4 id="MDL锁"><a href="#MDL锁" class="headerlink" title="MDL锁"></a>MDL锁</h4><p>MDL 不需要显式使用，在访问一个表的时候会被自动加上。MDL的作用是保证读写的正确性。<br>在 MySQL 5.5 版本中引入了 MDL，当对一个表做增删改查操作的时候，加 MDL 读锁；当要对表做结构变更操作的时候，加MDL写锁。</p>
+<ul>
+<li>读锁之间不互斥，因此你可以有多个线程同时对一个表增删改查。</li>
+<li>读写之间、写写之间互斥，保证变更表结构操作的安全性。</li>
+</ul>
+<h3 id="行锁"><a href="#行锁" class="headerlink" title="行锁"></a>行锁</h3><h4 id="共享锁（S锁）"><a href="#共享锁（S锁）" class="headerlink" title="共享锁（S锁）"></a>共享锁（S锁）</h4><p>select * from t where id = 1 lock in share mode;</p>
+<h4 id="排他锁"><a href="#排他锁" class="headerlink" title="排他锁"></a>排他锁</h4><ul>
+<li>select * from t where id = 1 for update;</li>
+<li>insert …</li>
+<li>update …</li>
+<li>delete …</li>
+</ul>
 
       
     </div>
@@ -463,7 +471,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/java/" rel="tag"># java</a>
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
           
         </div>
       
@@ -476,8 +484,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/17/lambda表达式/" rel="next" title="lambda表达式">
-                <i class="fa fa-chevron-left"></i> lambda表达式
+              <a href="/2019/07/08/mysql架构/" rel="next" title="mysql架构">
+                <i class="fa fa-chevron-left"></i> mysql架构
               </a>
             
           </div>
@@ -485,10 +493,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/18/工厂方法模式/" rel="prev" title="工厂方法模式">
-                工厂方法模式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -698,7 +702,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String缓存"><span class="nav-number">2.</span> <span class="nav-text">String缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#静态创建和new创建"><span class="nav-number">2.1.</span> <span class="nav-text">静态创建和new创建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#intern方法"><span class="nav-number">2.2.</span> <span class="nav-text">intern方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Integer缓存"><span class="nav-number">3.</span> <span class="nav-text">Integer缓存</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类"><span class="nav-number">1.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全局锁"><span class="nav-number">2.</span> <span class="nav-text">全局锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表级锁"><span class="nav-number">3.</span> <span class="nav-text">表级锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#表锁"><span class="nav-number">3.1.</span> <span class="nav-text">表锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MDL锁"><span class="nav-number">3.2.</span> <span class="nav-text">MDL锁</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行锁"><span class="nav-number">4.</span> <span class="nav-text">行锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#共享锁（S锁）"><span class="nav-number">4.1.</span> <span class="nav-text">共享锁（S锁）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排他锁"><span class="nav-number">4.2.</span> <span class="nav-text">排他锁</span></a></li></ol></li></ol></div>
             
 
           </div>
