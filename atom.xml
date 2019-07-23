@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://sunzhiqiang.com.cn/"/>
-  <updated>2019-07-15T15:30:51.866Z</updated>
+  <updated>2019-07-23T00:03:43.577Z</updated>
   <id>http://sunzhiqiang.com.cn/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>线程池TheadPoolExecutor源码解析</title>
+    <link href="http://sunzhiqiang.com.cn/2019/07/23/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/"/>
+    <id>http://sunzhiqiang.com.cn/2019/07/23/线程池源码解析/</id>
+    <published>2019-07-22T16:10:00.000Z</published>
+    <updated>2019-07-23T00:03:43.577Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h3&gt;&lt;p&gt;前面已经介绍过线程池的创建和线程池的使用：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;线程池的创建：&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="多线程" scheme="http://sunzhiqiang.com.cn/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+    
+      <category term="多线程" scheme="http://sunzhiqiang.com.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
   
   <entry>
     <title>mysql中的锁</title>
@@ -492,32 +520,6 @@
     <id>http://sunzhiqiang.com.cn/2018/11/11/Exchanger/</id>
     <published>2018-11-10T17:50:00.000Z</published>
     <updated>2018-11-11T06:23:02.082Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="多线程" scheme="http://sunzhiqiang.com.cn/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-    
-      <category term="多线程" scheme="http://sunzhiqiang.com.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ReentrantReadWriteLock</title>
-    <link href="http://sunzhiqiang.com.cn/2018/11/10/ReentrantReadWriteLock/"/>
-    <id>http://sunzhiqiang.com.cn/2018/11/10/ReentrantReadWriteLock/</id>
-    <published>2018-11-10T11:50:00.000Z</published>
-    <updated>2018-11-10T16:24:03.307Z</updated>
     
     <summary type="html">
     
